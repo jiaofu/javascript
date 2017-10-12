@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+
+		   <link rel="stylesheet"   type="text/css" href="../../../static/tsh/1.0.0/print/printCss.css" />
+		 <link rel="stylesheet" type="text/css" href="../../../static/tsh/1.0.0/print/toolClose.css"    />
+		 <link rel="stylesheet" href="../../../static/tsh/1.0.0/themes/default/main.css" /> 
+		 <script type="application/javascript" src="../../../static/tsh/1.0.0/jquery.min.js"></script>
+		  <script type="application/javascript" src="../../../static/tsh/1.0.0/print/changePostion.js"></script>
+		  <script type="application/javascript" src="../../../static/tsh/1.0.0/print/KuaidiData.js"></script>
+	<script type="application/javascript" src="../../../static/tsh/1.0.0/eventUnit.js"></script>
+   <script type="application/javascript" src="../../../static/tsh/1.0.0/print/printOrder.js"></script>
+   <script type="application/javascript" src="../../../static/tsh/1.0.0/print/PrintKuaiDi.js"></script>
+    <script type="application/javascript" src="../../../static/tsh/1.0.0/print/setprintKuaiDi.js"></script>
+      <script type="application/javascript" src="../../../static/order/1.0.0/UtilTool.js"></script>
+      
+	<script src="../../../static/tsh/1.0.0/plugins/others/webuploader-0.1.5/webuploader.nolog.min.js"></script>
+ 	<script src="../../../static/order/1.0.0/uploadimg.js"></script>  
+
+		 
+		 
+	</head>
+	
+	<body>
+	<div>
+		<div style=" width: 228mm ;height: 48px;"> 
+		
+			<div style="float: right;">
+		
+			 <span style="float: left; padding-top: 5px; font-size:20px; color:#330000 ;font-family: 'Microsoft YaHei'" > 选择打印模板:  </span>
+		 <div class="styled-select" style="float: left; ">
+		 
+		 <select id="tempSelect"  ></select>
+		 
+		 </div>
+		 <a class='btn '  id="editsetcontext" href='javascript:;'  >编辑</a>
+
+		<a href="PrintExplain.html" class="btn"   value="打印说明" target="_blank" >打印说明 </a>
+		<input id="btnPrint" class="butprint" value="打印" type="button"   style="top: 20px; margin-right: 5px;"  />
+		
+
+		</div>
+		</div>
+		<div class="first" style="width: 228mm ;height: 125mm ;  position: relative;   border:0px solid  gray; overflow:auto">
+
+	</div>
+</div>
+
+
+
+   <div id="imgs" style="display: none;"></div>
+								                    
+
+
+
+<div  id="setcontext"  style="width: 230mm; border:10px solid #cceff5;background:#fafcfd; height: 500px; display: none; position: fixed; left: 0;right: 0; top:100px; bottom:0;  margin:auto; z-index: 9; background-color: #FFF; overflow:auto">
+		<div style="height: 50px;  margin: 5px; margin-left: 20px;">
+			<span> 模板名称 ：<input type="text" class="textbox" value="    "  id="pname"> </span>
+			<span style="float: right; margin-right: 50px;"  id="lastdatatime">最后更新时间：</span>
+				<hr />
+		</div>
+		<div style=" position: relative; margin-left: 20px;" id="chosecontext"></div>
+		<div style="height: 80px;position: relative;">
+			<hr />
+			<table>
+				<tr><td><label> <div id="filePicker1" class="filePicker" href='javascript:;' style="padding-top:10px; line-height:32px; padding-right:6px">设置页面背景</div></label></td>
+				<td><a class='btn '  id="setPageSize" href='javascript:;'   >设置尺寸大小</a></td>
+				<td><a class='btn '  id="setPageContext"  href='javascript:;'  >设置打印内容</a></td>
+				<td><a class='btn ' id="savePage"  href='javascript:;'  >保存</a></td>
+				<td><a class='btn '  id="canclePage" href='javascript:;'  >取消</a></td>
+				<td><a class='btn '  id="testPrint" href='javascript:;'  >测试打印</a></td>
+				<td> <input type="checkbox"  class="ckInput"  id="setDefault"/> 设置为默认模版</td></tr>
+				
+				
+			</table>
+			<!--<span style="margin-top: 7px; padding-top: 0px;"><a class="filePicker " id="filePicker1" href='javascript:;' >设置页面背景</a></span>
+			<span ><a class='btn '  id="setPageSize" href='javascript:;'   >设置尺寸大小</a></span>
+			<span><a class='btn '  id="setPageContext"  href='javascript:;'  >设置打印内容</a></span>
+			<span><a class='btn ' id="savePage"  href='javascript:;'  >保存</a></span>
+			<span><a class='btn '  id="canclePage" href='javascript:;'  >取消</a></span>
+			<span><a class='btn '  id="testPrint" href='javascript:;'  >测试打印</a></span>
+			<span>   <input type="checkbox"  class="ckInput"  id="setDefault"/> 设置为默认模版</span>-->
+		</div>
+		
+		
+		
+		
+	</div>
+	
+		
+	<div class="example" style="position:relative; display: none;">
+		
+		<div  name="seller_send_contact"  class="examplediv closeparent" style="width: 210px ; height: 30px;"><span>发件人姓名</span><div class="divlastbut"></div></div>
+		<div name="seller_send_address"  class="examplediv closeparent" style="width: 210px ; height: 30px;"><span>发件人地址</span><div class="divlastbut"></div></div>
+		<div name="seller_send_tel"  class="examplediv closeparent" style="width: 210px ; height: 30px;"><span>发件人手机</span><div class="divlastbut"></div></div>
+		<div name="seller_name"  class="examplediv closeparent"  style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>供应商名称</span><div class="divlastbut"></div></div>
+		<div name="buyer_logistics_contact"   class="examplediv closeparent" style="width: 210px ; height: 30px;"><span>收件人姓名</span><div class="divlastbut"></div></div>
+		<div name="buyer_logistics_address"  class="examplediv closeparent" style="width: 210px ; height: 30px;"><span>收件人地址</span><div class="divlastbut"></div></div>
+		<div name="buyer_logistics_tel"  class="examplediv closeparent" style="width: 210px ; height: 30px;"><span>收件人手机</span><div class="divlastbut"></div></div>
+		<div name="buyers_remark"   class="examplediv closeparent" style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>买家信息</span><div class="divlastbut"></div></div>
+		<div name="order_no"   class="examplediv closeparent" style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>订单编号</span><div class="divlastbut"></div></div>
+		<div name="goodsdetail"  class="examplediv closeparent" style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>订单详情</span><div class="divlastbut"></div></div>
+		<div name="datatime" class="examplediv closeparent"  style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>打单日期</span><div class="divlastbut"></div></div>
+		<div name="send_no" class="examplediv closeparent"  style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>发货编号</span><div class="divlastbut"></div></div>
+		
+	</div>
+	<div  class="divsetwidthset closeparent" style=" border:5px solid #cceff5;background:#fafcfd; display: none;position: fixed; left: 0;right: 0; top:120px; bottom:0; height: 190px;  margin:auto;z-index: 998; background-color: #FFF;">
+			<div class="title">
+			<div class="panel-title"  style="margin-top: 8px; font-size: 20px;">设置模版尺寸 </div>
+			<div  class="close  postionbtn"></div>
+		
+			</div>
+		
+			<div class="divtext"><span>宽：</span><input type="text" class="textbox" value="228" id="width"> <span>毫米</span></div>
+			<div class="divtext"><span>高：</span><input type="text" class="textbox" value="125" id="height"> <span>毫米</span></div>
+
+		
+		<div class="postbtnright" style="margin-right: 20px;" >
+			
+						<hr />
+			<a class='btn ' id="okdivsetwidthset" href='javascript:;'  >确定</a>
+			<a class='btn ' id="cancledivsetwidthset" href='javascript:;'  >取消</a>
+		</div>
+		
+	</div>	
+		
+		
+		<div class="divsetContext closeparent" style=" border:5px solid #cceff5;background:#fafcfd; display: none;position: fixed; left: 0;right: 0; top:100px; width: 800px; height: 180px; bottom:0;  margin:auto;z-index: 999; background-color: #FFF;">
+			<div class="title">
+							<div class="panel-title" style="margin-top: 8px; font-size: 20px;">设置打印内容 </div>
+			<div  class="close  postionbtn"></div>
+		
+				
+			</div>
+			
+			<table id="checkboxtable">
+				<tr>
+					<td>发件人信息:</td> <td> 
+						<input type="checkbox"  name="seller_send_contact"  disabled="disabled" checked="checked"/> 	<span style="color: red;">发件人姓名</span></td> 
+					<td>  	<input type="checkbox" name="seller_send_tel"   disabled="disabled" checked="checked"/> 	<span style="color: red;">发件人手机</span></td> 
+					<td> 	<input type="checkbox" name="seller_send_address"  disabled="disabled" checked="checked"/> 	<span style="color: red;">发件人地址</span></td> 
+					<td> 	<input type="checkbox"  name="seller_name" /> 	<span>供应商名称</span></td>
+				</tr>
+				<tr><td>收件人信息:</td>
+					<td>   <input type="checkbox"  name="buyer_logistics_contact" class="ckInput" disabled="disabled"  checked="checked"/> 	<span style="color: red;">收件人姓名</span></td>
+					<td>	<input type="checkbox" name="buyer_logistics_tel"  class="ckInput" disabled="disabled" checked="checked"/> 	<span style="color: red;">收件人手机</span></td>
+					<td>  	<input type="checkbox"  name="buyer_logistics_address"  class="ckInput" disabled="disabled" checked="checked"/> 	<span style="color: red;">收件人地址</span></td> 
+					<td> 	<input type="checkbox"  class="ckInput"  name="buyers_remark" /> 	<span>买家信息</span></td>
+				</tr>
+				<tr><td>订单信息:</td> 
+					<td><input type="checkbox"  class="ckInput"  name="send_no"/> 	<span>发货编号</span></td>
+					<td>		   <input type="checkbox"  class="ckInput" name="order_no" /> 	<span>订单编号</span></td> 
+					<td>  	<input type="checkbox"  class="ckInput"  name="goodsdetail"/> 	<span>订单详情</span></td> 
+					<td>   	<input type="checkbox"  class="ckInput"  name="datatime"/> 	<span>打单日期</span></td>
+
+				</tr>
+	
+				
+			</table>
+	
+			
+	
+			<div class="postbtnright" style="margin-right: 20px;">
+						<hr />
+				<a class='btn ' id="okdivsetContext" href='javascript:;'  >确定</a>
+			<a class='btn ' id="cancledivsetContext" href='javascript:;'  >取消</a>
+			</div>
+		</div>
+		<iframe  style="display: none;" id="newiframe">
+			
+		</iframe>
+
+	<div id="outer">  
+      </div> 
+	</body>
+</html>

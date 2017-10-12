@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>canvas</title>
+    <script type="text/javascript" src="../js/jQuery.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+            outline: none;
+            border: none;
+        }
+        #canvas{
+            width: 7rem;
+            margin: .25rem 0 0 1.5rem;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body> 
+    <canvas id="canvas" width="1000" height="600"></canvas>
+</body>
+</html>
+<script type="text/javascript">
+    /**
+     * rem 布局初始化
+     */
+    $('html').css('font-size', $(window).width()/10);
+    /**
+     * 获取 canvas 画布
+     * 获取 canvas 绘图上下文环境
+     */
+    var canvas = $('#canvas')[0];
+    var cxt = canvas.getContext('2d');
+    
+    /**
+     * 绘制一片星空
+     */
+    cxt.fillStyle = 'black';
+    cxt.fillRect(0, 0, canvas.width, canvas.height);
+    
+    for(var i = 0; i <= 300; i++){
+        var fiveStart = {};
+        fiveStart.Radius = Math.random()*6+6;
+        fiveStart.offsetX = Math.random()*canvas.width;
+        fiveStart.offsetY = Math.random()*canvas.height;
+        fiveStart.RotationAngle = Math.random()*360;
+        
+        drawFiveStar(cxt, fiveStart);
+    }
+    
+    /**
+     * 控制五角星的方法
+     */
+    function drawFiveStar(cxt, fiveStart){
+        cxt.save();
+        cxt.translate(fiveStart.offsetX, fiveStart.offsetY); //相对于原点的偏移量
+        cxt.rotate(fiveStart.RotationAngle/180*Math.PI); //图形旋转(弧度)
+        cxt.scale(fiveStart.Radius, fiveStart.Radius); //图形缩放( X轴的倍数, Y轴的倍数 )
+        fiveStartPath(cxt);
+        cxt.fillStyle = "yellow";
+        cxt.fill();
+        cxt.restore();
+    }
+    
+    /**
+     * 绘制标准五角星路径的方法
+     */
+    function fiveStartPath(cxt){
+        cxt.beginPath();
+        var x = 0; y = 0;
+        for(var i = 0; i < 5; i++){
+            x = Math.cos((18+72*i)/180*Math.PI);
+            y = Math.sin((18+72*i)/180*Math.PI);
+            cxt.lineTo(x, 0-y);
+            x = Math.cos((54+72*i)/180*Math.PI)/2.0;
+            y = Math.sin((54+72*i)/180*Math.PI)/2.0;
+            cxt.lineTo(x, 0-y);
+        }
+        cxt.closePath();
+    }
+</script>

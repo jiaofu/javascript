@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <title>淘实惠管理系统</title>
+      <link rel="stylesheet" type="text/css" href="../../../static/tsh/1.0.0/themes/easyui.css?gversion=1.0.0">
+    <link rel="stylesheet" type="text/css" href="../../../static/tsh/1.0.0/themes/style.css?gversion=1.0.0">
+    <script src="../../static/tsh/1.0.0/jquery.min.js?gversion=1.0.0"></script>
+    <script src="../../static/tsh/1.0.0/jquery.easyui.min.js?gversion=1.0.0"></script>
+    <script src="../../../static/tsh/1.0.0/jquery.easyui.extend.min.js?gversion=1.0.0"></script>
+    <script src="../../../static/tsh/1.0.0/plugins/datagrid-cellediting.js"></script>
+    <script src="../../../static/order/1.0.0/UtilTool.js"></script>
+    <script src="../../../static/order/1.0.0/orderDetail.js"></script>
+  <style>
+  	
+  	#orderDiv div {margin-left:10px;}
+
+
+  </style>
+</head>
+<body style="margin:0 20px;overflow-y: auto; overflow-x: hidden; " >
+  <div id="tsh-title">
+    <h3><span class="t1">订单详情</span> </h3>
+      <div class="title-border"></div>
+  </div>
+  <div id="orderDiv"> 
+  	<table style="width: 100%;">
+  		<tr><td style="width: 25%;"><span role= "order_no" >订单编号：</span></td>
+  			<td style="width: 25%;"><span role="status">订单状态：</span></td>
+  			<td style="width: 25%;"><span role="create_time">成交时间：</span></td>
+  			<td style="width: 25%;"><span role="order_type">订单类型：</span></td>
+  			</tr>
+  			<tr><td><span role= "should_pay_amount" >订单金额：</span></td>
+  			<td ><span role="supplier_coupon_money">供应商优惠金额：</span></td>
+  			<td ><span role="platform_coupon_money">平台优惠金额：</span></td>
+  			<td ><span role="area_coupon_money">县域优惠金额：</span></td>
+  			</tr>	
+  			<tr><td><span role= "total_order_no" >总单号：</span></td>
+  			<td ><span role="actual_pay_amount">实收款：</span></td>
+  			<td ><span role=""></span></td>
+  			<td ><span role=""></span></td>
+  			</tr>	
+  			<tr><td><span role= "area_name" >县域信息：</span></td>
+  			<td ><span role="buyer_logistics_contact">物流中心收货人：</span></td>
+  			<td ><span role="buyer_logistics_tel">物流中心电话：</span></td>
+  			<td ><span role="buyer_logistics_address">物流中心：</span></td>
+  			</tr>
+  				<tr><td ><span role= "buyers_name" >网点信息：</span></td>
+  			<td ><span role="buyers_contact">网点联系人：</span></td>
+  			<td ><span role="buyers_tel">网点联系电话：</span></td>
+  			<td ><span role="buyers_address">网点地址：</span></td>
+  			</tr>
+  				<tr><td ><span role= "member_user_name" >买家信息：</span></td>
+  			<td ><span role="member_user_tel">买家电话：</span></td>
+  			<td ><span role=""></span></td>
+  			<td ><span role=""></span></td>
+  			</tr>
+  			
+  		
+
+  		<tr><td colspan='5'>买家备注：<span role="buyers_remark"></span> 
+  		</td></tr>
+  		<tr><td colspan='5' style="height:5px"></td></tr>
+  		<tr><td colspan='5'><span>卖家备注：</span> 
+  			<input class="easyui-textbox" name="seller_remark" id="spanseller_remark"  data-options="multiline:true" style="height:100px;width:300px;margin-top:5px;"></input>
+  			<input type="hidden" name="orderId" id="orderId" />
+  			<label>0/200</label>
+  		</td></tr>
+  		<tr><td colspan="5"><a style="margin-left:110px;" class="btn btn-1" id="submitRemark">保存</a></td></tr>
+  	</table>
+
+  </div>
+  <div id="tt" class="easyui-tabs"  fit="true"   tabHeight="40" style="width:100%;height:auto;padding-top:50px;padding-bottom:20px">
+</div>
+</body>
+</html>
+

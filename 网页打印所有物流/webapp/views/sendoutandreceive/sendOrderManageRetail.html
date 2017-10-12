@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+	<title>发货管理</title>
+	<link rel="stylesheet" type="text/css" href="../../static/tsh/1.0.0/themes/easyui.css">
+   	<link rel="stylesheet" type="text/css" href="../../static/tsh/1.0.0/themes/default/icons.css">
+   	<link rel="stylesheet" type="text/css" href="../../../static/tsh/1.0.0/themes/style.css?gversion=1.0.0">
+   	<link rel="stylesheet" type="text/css" href="../../../static/project/css/sendOrderManage_check.css?gversion=1.0.0">
+   	<link rel="stylesheet" type="text/css" href="../../../static/sendGoods/sendOrderManage.css" >
+    <script src="../../static/tsh/1.0.0/jquery.min.js?gversion=1.0.0"></script>
+    <script src="../../static/tsh/1.0.0/jquery.easyui.min.js?gversion=1.0.0"></script>
+    <script src="../../../static/tsh/1.0.0/jquery.easyui.extend.min.js?gversion=1.0.0"></script>
+    <script src="../../../static/tsh/1.0.0/plugins/datagrid-cellediting.js"></script>
+    
+         <script src="../../../static/order/1.0.0/orderListWarehouse.js"></script>
+    
+     <script src="../../../static/order/1.0.0/mask.js"></script>
+     <script src="../../../static/order/1.0.0/commonfuncode.js"></script>
+     <script src="../../static/order/1.0.0/sendOrderManage_check_retail.js"></script>
+    <script src="../../static/order/1.0.0/sendOrderManage.js"></script>
+    
+      
+           <script src="../../../static/order/1.0.0/excelData.js"></script>
+   <script src="../../../static/order/1.0.0/excelDataSend.js"></script>
+   <script src="../../../static/order/1.0.0/alreadyShipped.js"></script>
+   <script src="../../static/tsh/1.0.0/print/PrintStart.js"></script>
+     <script src="../../../static/order/1.0.0/printOrder.js"></script>  
+	   <script src="../../../static/order/1.0.0/excelData.js"></script>
+   <script src="../../../static/order/1.0.0/excelDataSend.js"></script>
+             <script src="../../../static/order/1.0.0/UtilTool.js"></script>
+		    <script src="../../../static/common/1.0.0/jsUtilTools.js?gversion=1.0.0"></script>
+	 <script src="../../../static/tsh/1.0.0/plugins/others/webuploader-0.1.5/webuploader.nolog.min.js"></script>
+</head>
+<body style="margin:0 20px" >
+		<div id="remark" style="display:none;margin:auto 0px;" class="easyui-dialog"  title="卖家备注"  data-options="buttons: '#dlg-buttons',closed:true,modal:true" >
+			<form id="remarkForm" class="form"  style="width:350px;margin:0px auto;padding:20px;border:0px;">
+				<div style="padding-left:30px;"><span>备注：</span></div>
+				<div style="padding:10px 0px 0px 30px;">
+					<input type="hidden" name="orderId" id="orderId" />
+					<input class="easyui-textbox" name="sellerRemark" id="sellerRemark"  data-options="multiline:true,validType:{length:[0,200]}" style="height:100px;width:300px;margin-top:5px;"></input>
+				</div>
+				<div style="text-align: center; padding-top: 20px;">
+					<a href="javascript:;" onclick="$('#remark').dialog('close')" class="btn btn-info"><i class="i-close"></i>取消</a>
+					&emsp;&emsp;
+					<a href="javascript:;"  class="btn btn-1" id="editsubmit"><i class="i-ok"></i>确定</a>
+				</div>
+			</form>
+		</div>
+
+      	<div class="tsh-title tsh-title2">
+		   <h3>
+		        <div class="title-border"></div>
+		        <span class="t1">发货管理</span>
+		    </h3>
+		</div>
+	    
+	    	
+	    	
+	    	 <div id="ttmain" class="easyui-tabs"  fit="true"   tabHeight="40" style="width:100%;height:auto;padding-top:50px;padding-bottom:20px">
+	    	<div id="tab1" title="待处理" style="padding:10px;display:none;">
+	    		<div id="tb1">
+		      			<form id="form1" class="tsh-toolbar" method="post">
+		      				<input name="tabStatus" type="hidden" value="1">
+							<label>
+								<span>商品名称：</span>
+								<input name="goodsName" class="easyui-textbox"
+							   data-options="" style="width:170px; height:30px;" prompt="请输入商品名称、编码..."/>
+							</label>
+					
+							<label>
+								<span>订单编号：</span>
+								<input name="orderNo" class="easyui-textbox"  data-options="" style="width:170px; height:30px;" prompt=""/>
+							</label>
+							<label>
+								<span>成交时间：</span>
+							  	<input name="startTime" class="easyui-datebox"  id="startTime1" value="" validType="startTime['#endTime1']" style="width:170px; height:30px;">-
+							  	<input name="endTime" class="easyui-datebox"  id="endTime1" value=""  validType="endTime['#startTime1']" style="width:170px; height:30px;">
+							</label>
+							<label>
+							<span>发货编号：</span>
+							<input name="send_no" class="easyui-textbox"  data-options="" style="width:170px; height:30px;" prompt=""/>
+						</label>
+			
+							<label>
+							<span>下单县域：</span>
+								<input class="easyui-combobox"  style="width:80px; height:30px;" id="provincial1"/>
+				                -
+				                <input class="easyui-combobox"  style="width:80px; height:30px;" id="cities1"/>
+				                -
+				                <input class="easyui-combobox"  style="width:80px; height:30px;" id="counties1"   />
+							</label>
+							
+							<label>
+								<span>订单类型：</span>
+								<input name="orderType" id="orderType1" class="easyui-combobox" prompt="订单类型" style="width:170px; height:30px;" />
+							</label>
+							
+							<label style="" class=""><a href="javascript:searchRetailOrder(1);" class="btn btn-1" id="J_Search"><i class="i-search"></i>搜索</a></label>
+							<label>
+								<a href="javascript:clearSearch(1);" class="btn" id="J_Empty">清空条件</a>
+							</label>
+							
+						
+						</form>		
+						 <div style="margin:10px 0;">
+						   <table>
+						     <tr>
+						       <td>						      
+					    	     <input type="checkbox" name="checkedAll" onchange="onAllChecked(1,this)">全选&nbsp;&nbsp;
+					    	   </td>
+					    	 
+                            
+					    
+					        	<td>
+					    	     <label  ><a href="javascript:void(0)"  class="btn fontgreed" id="submitToexamine">提交处理</a></label>
+					    	   </td>
+					    		<td>
+					    	     <label  ><a href="javascript:mergeOrder()" class="btn fontgreed" id="">手动合单</a></label>
+					    	   </td>
+						      
+						    
+						      	<td>
+					    	     <label  ><a href="javascript:autoMerge()" class="btn fontgreed" id="">自动合单</a></label>
+					    	   </td>
+
+					    	   <td>
+					    	     <label  ><a href="javascript:setMergeDialog()" class="btn fontgreed" id="">设置合单逻辑</a></label>
+					    	   </td>
+
+
+						     </tr>
+						   </table>                  			
+
+					    </div>	
+				</div>
+				<table id="dataGrid1" class=""></table>	
+	    	</div>
+	    	<div id="tab2" title="待发货" style="padding:10px;display:none;">
+		       <div id="tb2">
+	      			<form id="form2" class="tsh-toolbar" method="post">
+	      				<input name="tabStatus" type="hidden" value="2">
+						<label>
+							<span>商品名称：</span>
+							<input name="goodsName" class="easyui-textbox"
+						   data-options="validType:'length[3,20]'" style="width:170px; height:30px;" prompt="请输入商品名称、编码..."/>
+						</label>
+						<label>
+							<span>订单编号：</span>
+							<input name="orderNo" class="easyui-textbox"  data-options="" style="width:170px; height:30px;" prompt=""/>
+						</label>
+						<label>
+							<span>成交时间：</span>
+						  	<input name="startTime" class="easyui-datebox"  id="startTime2" value="" validType="startTime['#endTime2']" style="width:170px; height:30px;">-
+						  	<input name="endTime" class="easyui-datebox"  id="endTime2" value=""  validType="endTime['#startTime2']" style="width:170px; height:30px;">
+						</label>
+					<label>
+							<span>发货编号：</span>
+							<input name="send_no" class="easyui-textbox"  data-options="" style="width:170px; height:30px;" prompt=""/>
+						</label>
+						<label>
+							<span>下单县域：</span>
+							<input class="easyui-combobox"  style="width:80px; height:30px;" id="provincial2"/>
+			                -
+			                <input class="easyui-combobox"  style="width:80px; height:30px;" id="cities2"/>
+			                -
+			                <input class="easyui-combobox"  style="width:80px; height:30px;" id="counties2"   />
+						</label>
+						
+							<label>
+								<span>订单类型：</span>
+								<input name="orderType" id="orderType2" class="easyui-combobox" prompt="订单类型" style="width:170px; height:30px;" />
+							</label>
+						
+						<label style="" class=""><a href="javascript:searchRetailOrder(2);" class="btn btn-1" id="J_Search"><i class="i-search"></i>搜索</a></label>
+						<label><a href="javascript:clearSearch(2);" class="btn" id="J_Empty">清空条件</a></label>
+							<label style="" class=""  ><a href="javascript:sendOrderManage(2);" class="btn"><i class="i-m-derive"></i>导出Excel</a></label>
+						
+					</form>		
+					<div style="margin:10px 0;">
+
+
+
+
+
+
+  <table>
+  	<tr>
+  		 <td> 				    	<input type="checkbox" name="checkedAll" onchange="onAllChecked(2,this)">全选&nbsp;&nbsp;</td>
+  
+  						 			   
+  	
+  	<td>
+  						    		<ul id="nav">  
+  <li><a href="#" class="btn fontgreed" >打印</a>  
+    <ul class="childul">  
+      <li><a href="javascript:void(0)" name="express_print">快递单</a></li>  
+      <li><a href="javascript:void(0)"  name="area_print">县域发货单</a></li>
+       <li><a href="javascript:void(0)" name="dot_print">网点发货单</a></li>   
+    </ul>  
+  </li>  
+  </ul>
+  	</td>
+  	
+  		 <td>
+  						    	<label style="" class=""><a href="javascript:void(0)" id="sendGoods" class="btn fontgreed">手动发货</a></label>
+  	</td> <td>
+                  			      <label >  <div id="filePicker1" class="filePicker" style="padding-top:10px; line-height:32px; padding-right:6px">上传excel</div></label>
+  	</td>
+  	
+  	</tr>
+  </table>
+					</div>	
+			    </div>
+			    <table id="dataGrid2" class=""  ></table>
+		    </div>
+		    <div id="tab3" title="已发货" style="padding:10px;display:none;">
+		        <div id="tb3">
+	      			<form id="form3" class="tsh-toolbar" method="post">
+	      				<input name="tabStatus" type="hidden" value="3">
+						<label>
+							<span>商品名称：</span>
+							<input name="goodsName" class="easyui-textbox"
+						   data-options="validType:'length[3,20]'" style="width:170px; height:30px;" prompt="请输入商品名称、编码..."/>
+						</label>
+					
+							<label>
+							<span>订单编号：</span>
+							<input name="orderNo" class="easyui-textbox"  data-options="" style="width:170px; height:30px;" prompt=""/>
+						</label>
+						<label>
+							<span>发货时间：</span>
+						  	<input name="startTime" class="easyui-datebox"  id="startTime3" value="" validType="startTime['#endTime3']" style="width:170px; height:30px;">-
+						  	<input name="endTime" class="easyui-datebox"  id="endTime3" value=""  validType="endTime['#startTime3']" style="width:170px; height:30px;">
+						  	
+						  	<span class="fontgreed" style="margin-left: 20px;" name="seems7">近7天</span>
+						  	<span class="fontgreed" style="margin-left: 10px;" name="seems30">近30天</span>
+						</label>
+			 <br />
+						<label>
+							<span>发货编号：</span>
+							<input name="send_no" class="easyui-textbox"  data-options="" style="width:170px; height:30px;" prompt=""/>
+						</label>
+						<label>
+							<span>物流单号：</span>
+							<input name="send_logistics_number" class="easyui-textbox"  data-options="" style="width:170px; height:30px;" prompt=""/>
+						</label>
+						
+						<span>下单县域：</span>
+							<input class="easyui-combobox"  style="width:80px; height:30px;" id="provincial3"/>
+			                -
+			                <input class="easyui-combobox"  style="width:80px; height:30px;" id="cities3"/>
+			                -
+			                <input class="easyui-combobox"  style="width:80px; height:30px;" id="counties3"   />
+						</label>
+						<label style="" class=""><a href="javascript:searchRetailOrder(3);" class="btn btn-1" id="J_Search"><i class="i-search"></i>搜索</a></label>
+						<label><a href="javascript:clearSearch(3);" class="btn" id="J_Empty">清空条件</a></label>
+
+					</form>		
+					 <div style="margin:10px 0;">
+					 			   <table><tr>
+					 			   	
+					 			   	<td>				    	<input type="checkbox" name="checkedAll" onchange="onAllChecked(3,this)">全选&nbsp;&nbsp;</td>
+					 			   
+					 			   	<td>
+					 			   			<ul id="nav" style="float: left; ">  
+  <li><a href="#" class="btn fontgreed" >打印</a>  
+    <ul class="childul">  
+      <li><a href="javascript:void(0)" name="express_print">快递单</a></li>  
+      <li><a href="javascript:void(0)" name="area_print">县域发货单</a></li>
+       <li><a href="javascript:void(0)"  name="dot_print">网点发货单</a></li>  
+
+    </ul>  
+  </li>  
+ </ul>
+					 			   		
+					 			   	</td>	   	
+					 			   </tr></table>
+
+
+
+
+      					
+				    </div>	
+			    </div>
+			    <table id="dataGrid3" class=""  ></table>
+		    </div>
+
+		</div>
+
+		</div>
+	
+		
+	
+			<input type="hidden" value="0"  id="sysType"/>  
+
+		<div id="dlgSplitOrder" class="easyui-dialog" title="拆分订单" data-options="iconCls:'icon-save',closed:true,modal:true" style="width:780px;height:530px;padding:0px">
+			<div class="splitFrame">
+				<div id="waitSplit" class="waitSplit">
+					<div>
+						<p class="pkg1PText">包裹1</p>
+						<div class="orderNo">订单:<span id="orderNo"></span></div>
+						<div class="pkg1">
+							<table id="waitSplitTb" class="waitSplitTb" width="auto" rules="rows">
+							</table>
+						</div>
+					</div>
+				</div>
+				<div id="move" class="moveDetails" onclick="movePdt()">
+					<span>>></span>
+				</div>
+				<div id="splited" class="splited"></div>
+			</div>
+			<div class="confirmSplit">
+				<label><a href="#" class="btn" onclick="$('#dlgSplitOrder').dialog('close')" >取消</a></label>
+				<label><a href="#" class="btn btn-1" onclick="uploadPkged()" >确认</a></label>
+			</div>
+		</div>
+		
+		<div id="dlgSetMerge" class="easyui-dialog" data-options="noheader:true, closed:true,modal:true" style="width:650px;height:320px;padding:0px">
+			<div class="mergeSetDivHeader">
+				<div class="mergeSetDivHeaderHeader">合单逻辑</div><div class="mergeSetDivHeaderRemark">(已拆分的订单不可以自动合单，只能使用手动合单)</div>
+				<div><img class="mergeSetDivHeaderImg" onclick="$('#dlgSetMerge').dialog('close')" src="../../../static/project/images/base/close.png"></img></div>
+			</div>
+			<div class="mergeSetDiv">
+				<input class="mergeSet" type="checkbox" disabled="disabled" checked="checked" id="orderType" /><label for="orderType">同一订单类型</label>
+				<input class="mergeSet" type="checkbox" disabled="disabled" checked="checked" id="logisAdd" /><label for="logisAdd">同一收货地址</label>
+				<input class="mergeSet" type="checkbox" disabled="disabled" checked="checked" id="logisTel" /><label for="logisTel">同一收货联系人</label>
+				<br>
+				<input class="mergeSet" type="checkbox" id="memTel" /><label for="memTel">同一买家身份</label>
+			</div>
+			<div class="mergeSetFrm">
+				<div>确认后只有符合条件的订单才能合并为一个包裹发货</div>
+				<label><a href="#" class="btn" onclick="$('#dlgSetMerge').dialog('close')" >取消</a></label>
+				<label><a href="#" class="btn btn-1" onclick="saveMergeSets()" >确认</a></label>
+			</div>			
+		</div>
+		    <div id="dialog" class="easyui-window" title="" closed="true" style="padding:10px;"></div>
+		    	<div id="validateErrorDialog">
+		<p id="imptDeliveryMsg"
+			style="font-size: 15px; padding-left: 10px; display: none;"></p>
+		<table id="errorDataGrid" class="easyui-datagrid"></table>
+		<div id="delivery-buttons"></div>
+	</div>
+	<form action="../../order/exportErrorDelivery.do" target="exportIframe"
+		id="exportErrorDelivery">
+		<input type="hidden" id="pathKey" name="pathKey" />
+	</form>
+	<iframe name="exportIframe" style="display: none;"></iframe>
+	<script src="../../../static/order/1.0.0/uploadOrderManagement.js"></script>
+</body>
+</html>
+  

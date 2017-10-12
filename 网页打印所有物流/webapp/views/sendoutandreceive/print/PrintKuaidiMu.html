@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+   <link rel="stylesheet" type="text/css" href="../../../static/tsh/1.0.0/print/toolClose.css"    />
+   		 <script type="application/javascript" src="../../../static/tsh/1.0.0/jquery.min.js"></script>
+      <script type="application/javascript" src="../../../static/tsh/1.0.0/print/setprintKuaiDi.js"></script>
+     
+      <script type="application/javascript" src="../../../static/order/1.0.0/UtilTool.js"></script>
+      <script type="application/javascript" src="../../../static/tsh/1.0.0/print/KuaidiData.js"></script>
+      
+   <script type="text/javascript"> </script>
+		<style type="text/css">
+			.btn{margin:0px; padding: 7px 15px;
+    display: inline-block;
+    color: #333;
+    cursor: pointer;
+    font-size: 12px;
+    height: 16px;line-height: 16px;border-radius: 5px;
+    text-decoration: none;font-family: "宋体";
+  border-style: solid;
+  border-width: 1px;
+  border-color: #dee3e6;
+  background-color:#f2f2f2;
+  background-image: -moz-linear-gradient( 90deg, rgb(242,242,242) 0%, rgb(251,251,251) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(242,242,242) 0%, rgb(251,251,251) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(242,242,242) 0%, rgb(251,251,251) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#f2f2f2,endColorstr=#fbfbfb,GradientType=0);
+
+}
+.btn:hover{
+  background-color:#fbfbfb;
+  background-image: -moz-linear-gradient( 90deg,rgb(251,251,251) 0%,rgb(242,242,242) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(251,251,251) 0%, rgb(242,242,242)100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(251,251,251) 0%, rgb(242,242,242) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#fbfbfb,endColorstr=#f2f2f2,GradientType=0);
+}
+
+
+.textbox {
+  position: relative;
+  border: 1px solid #D4D4D4;
+  background-color: #fff;
+  vertical-align: middle;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  height: 25px;
+}
+.title{
+	position: relative;
+	text-align: center;
+}
+.postionbtn{
+	 right: 0px;
+	 top: 0px;
+	 position: absolute;
+}
+
+.postbtnright{
+	 text-align: right;
+
+}
+.divtext{
+	 text-align: center;
+	 margin-top: 20px;
+}
+.divsetwidthset{
+	width: 500px;
+	height: 160px;
+}
+
+.divsetContext{
+		width: 600px;
+	height: 360px;
+	
+}
+table {
+	text-align: left;
+	margin:0 auto;
+
+	 
+}
+
+td{
+  border-left-width: 0px;
+  border-right-width: 0px;
+ 
+}
+.examplediv {
+	border:  1px solid blue;
+	position: relative;
+
+}
+
+
+		</style>
+	</head>
+	<body>
+	
+	<div  style="width: 228mm;">
+		<div style="height: 50px; ">
+			<span> 模板名称 ：<input type="text" class="textbox" value="    "> </span>
+			<span style="float: right; margin-right: 50px;"  id="lastdatatime">最后更新时间：</span>
+				<hr />
+		</div>
+		<div style="width: 228mm; height: 125px;"></div>
+		<div style="height: 80px;">
+			<hr />
+			<span><a class='btn '  id="setPageimg" href='javascript:;'  >设置页面背景</a></span>
+			<span><a class='btn '  id="setPageSize" href='javascript:;'  >设置尺寸大小</a></span>
+			<span><a class='btn '  id="setPageContext"  href='javascript:;'  >设置打印内容</a></span>
+			<span><a class='btn ' id="savePage"  href='javascript:;'  >保存</a></span>
+			<span><a class='btn '  id="canclePage" href='javascript:;'  >取消</a></span>
+			<span>   <input type="checkbox"  class="ckInput"  id="setDefault"/> 设置为默认模版</span>
+			<span><a class='btn '  id="testPrint" href='javascript:;'  >测试打印</a></span>
+		</div>
+		
+		
+		
+		
+	</div>
+	
+		
+	<div class="example">
+		
+		<div  name="seller_send_contact"  class="examplediv closeparent" style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>seller_send_contact</span></div>
+		<div name="seller_send_address"  class="examplediv closeparent" style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>seller_send_address</span></div>
+		<div name="seller_send_tel"  class="examplediv closeparent" style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>seller_send_tel</span></div>
+		<div name="seller_name"  class="examplediv closeparent"  style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>seller_name</span></div>
+		<div name="buyer_logistics_contact"   class="examplediv closeparent" style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>buyer_logistics_contact</span></div>
+		<div name="buyer_logistics_address"  class="examplediv closeparent" style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>buyer_logistics_address</span></div>
+		<div name="buyer_logistics_tel"  class="examplediv closeparent" style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>buyer_logistics_tel</span></div>
+		<div name="buyers_remark"   class="examplediv closeparent" style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>buyers_remark</span></div>
+		<div name="order_no"   class="examplediv closeparent" style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>order_no/span></span></div>
+		<div name="goodsdetal"  class="examplediv closeparent" style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>goodsdetal</span></div>
+		<div name="datatime" class="examplediv closeparent"  style="width: 210px ; height: 30px;"><div  class="close  postionbtn"></div><span>ssss</span></div>
+
+		
+	</div>
+	<div  class="divsetwidthset closeparent">
+			<div class="title">
+			<div class="panel-title">设置模版尺寸 </div>
+			<div  class="close  postionbtn"></div>
+		
+			</div>
+		
+			<div class="divtext"><span>宽：</span><input type="text" class="textbox" value="228" id="width"> <span>毫米</span></div>
+			<div class="divtext"><span>高：</span><input type="text" class="textbox" value="125" id="height"> <span>毫米</span></div>
+
+		
+		<div class="postbtnright">
+			
+						<hr />
+			<a class='btn ' id="okdivsetwidthset" href='javascript:;'  >确定</a>
+			<a class='btn ' id="cancledivsetwidthset" href='javascript:;'  >取消</a>
+		</div>
+		
+	</div>	
+		
+		
+		<div class="divsetContext closeparent">
+			<div class="title">
+							<div class="panel-title">设置打印内容 </div>
+			<div  class="close  postionbtn"></div>
+		
+				
+			</div>
+			
+			<table>
+				<tr>
+					<td>发件人信息:</td> <td> 
+						<input type="checkbox"  disabled="disabled" checked="checked"/> 	<span style="color: red;">发件人手机</span></td> 
+					<td>  	<input type="checkbox"  disabled="disabled" checked="checked"/> 	<span style="color: red;">发件人地址</span></td> 
+					<td> 	<input type="checkbox"  disabled="disabled" checked="checked"/> 	<span style="color: red;">发件人地址</span></td> 
+					<td> 	<input type="checkbox"  /> 	<span>供应商名称</span></td>
+				</tr>
+				<tr><td>收件人信息:</td>
+					<td>   <input type="checkbox"  class="ckInput" disabled="disabled"  checked="checked"/> 	<span style="color: red;">收件人姓名</span></td>
+					<td>	<input type="checkbox"  class="ckInput" disabled="disabled" checked="checked"/> 	<span style="color: red;">收件人手机</span></td>
+					<td>  	<input type="checkbox"  class="ckInput" disabled="disabled" checked="checked"/> 	<span style="color: red;">收件人地址</span></td> 
+					<td> 	<input type="checkbox"  class="ckInput" /> 	<span>买家信息</span></td>
+				</tr>
+				<tr><td>订单信息:</td> 
+					<td>		   <input type="checkbox"  class="ckInput" /> 	<span>订单编号</span></td> 
+					<td>  	<input type="checkbox"  class="ckInput" /> 	<span>订单详情</span></td> 
+					<td>   	<input type="checkbox"  class="ckInput" /> 	<span>打单日期</span></td>
+					<td></td>
+				</tr>
+	
+				
+			</table>
+	
+			
+	
+			<div class="postbtnright">
+						<hr />
+				<a class='btn ' id="okdivsetContext" href='javascript:;'  >确定</a>
+			<a class='btn ' id="cancledivsetContext" href='javascript:;'  >取消</a>
+			</div>
+		</div>
+	</body>
+</html>

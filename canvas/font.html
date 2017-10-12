@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		<canvas id="canvas2"></canvas>
+	</body>
+	<script>
+		function draw(){
+			var  ctx=document.getElementById('canvas').getContext('2d');
+			ctx.font="48px serif";
+			ctx.fillText("Hello world",10,50);
+		}
+		function draw2(){
+			var ctx=document.getElementById('canvas2').getContext('2d');
+					ctx.font="48px serif";
+					ctx.strokeText("Hello world",10,50)
+		}
+		draw();
+				draw2();
+	</script>
+</html>

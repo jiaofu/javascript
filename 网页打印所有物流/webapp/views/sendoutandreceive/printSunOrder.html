@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+	<link rel="stylesheet" type="text/css" href="../../static/tsh/1.0.0/themes/easyui.css">
+   	<link rel="stylesheet" type="text/css" href="../../static/tsh/1.0.0/themes/default/icons.css">
+    <link rel="stylesheet" type="text/css" href="../../static/home/1.0.0/home.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/tsh/1.0.0/themes/style.css?gversion=1.0.0">
+    <script src="../../static/tsh/1.0.0/jquery.min.js?gversion=1.0.0"></script>
+    <script src="../../static/tsh/1.0.0/jquery.easyui.min.js?gversion=1.0.0"></script>
+    <script src="../../../static/tsh/1.0.0/jquery.easyui.extend.min.js?gversion=1.0.0"></script>
+    <script language="javascript" src="../../../static/order/1.0.0/LodopFuncs.js"></script>
+    <script type="text/javascript" src="../../../static/order/1.0.0/jquery-jtemplates.js"></script>    
+    <script src="../../../static/order/1.0.0/printOrder.js"></script>
+<object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0> 
+	<embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0 pluginspage="install_lodop.exe"></embed>
+</object>
+<script type="text/javascript">
+
+  /*   $(document).ready(function() {
+    	var types=printOrder.getHtmlParams("types");
+    	$('#txt_orderTypes').val(types);
+    	
+    	var orderNos=printOrder.getHtmlParams("orderNos");
+    	$('#txt_orderNoList').val(orderNos);
+    	
+        printOrder.loadShopList("div_printData","shop-template-items");
+    	
+    });
+ */    
+ 
+    $(function(){
+    	var types=printOrder.getHtmlParams("types");
+    	$('#txt_orderTypes').val(types);
+    	var orderNos=printOrder.getHtmlParams("orderNos");
+    	$('#txt_orderNoList').val(orderNos);
+        printOrder.loadShopList("div_printData","shop-template-items");
+    });
+    
+  </script> 
+</head>
+<body>
+<div>
+  <input id="txt_orderNoList" style="display:none" value="" ></input>
+  <input id="txt_orderTypes" style="display:none" value="" ></input>
+</div>
+<textarea id="shop-template-items" rows="0" cols="0" style="display:none">
+{#foreach $T.shopList as shop}
+<div id="div{$T.shop$index}">
+<table border=1 cellSpacing=0 cellPadding=1 width="100%" style="word-break:break-all;border-collapse:collapse;border-width: 1px 1px 0px 1px; font-family: 	Microsoft YaHei; font-size:13px;" bordercolor="#333333" align=center>
+<thead>
+  <tr>
+    <td colspan="11">
+       <TABLE  width="100%">
+         <TR>
+           <TD><p align="center"><font style="font-family: Microsoft YaHei; font-size:16px;">发货单</font></TD>
+         </TR>     
+         <TR>
+           <TD>发货日期：{#if $T.shop.deliverDate != null} {$T.shop.deliverDate} {#/if} </TD>
+         </TR>  
+         <TR>
+            <TD>
+                                                  所属县域：{#if $T.shop.areaName != null} {$T.shop.areaName} {#/if}
+                       &nbsp;&nbsp;&nbsp;&nbsp;
+                       {#if $T.shop.areaTel != null} {$T.shop.areaTel} {#/if}
+           </TD>
+         </TR>
+         <TR>
+            <TD>
+                                               所属网点：{#if $T.shop.shopName != null} {$T.shop.shopName} {#/if}
+                       &nbsp;&nbsp;&nbsp;&nbsp;
+                       {#if $T.shop.shopTel != null} {$T.shop.shopTel} {#/if}
+           </TD>
+         </TR>
+         <TR>
+           <TD>网点物流地址：{#if $T.shop.shopAddress != null} {$T.shop.shopAddress} {#/if}</TD>
+         </TR>  
+       </TABLE>    
+    </td>
+  </tr>  
+  <TR>
+    <TD width="3%">序号</TD>
+    <TD width="10%">订单编号</TD>
+    <TD width="10%">条码</TD>
+    <TD width="23%" style="white-space:nowrap">商品名称</TD>
+    <TD width="12%" style="white-space:nowrap">规格</TD>
+    <TD width="10%">规格编码</TD>
+    <TD width="3%">单位</TD>
+    <TD width="4%">数量</TD>
+    <TD width="5%">单价</TD>
+    <TD width="10%">买家信息</TD>            
+    <TD width="10%">电话</TD>                
+   </TR>
+  </thead>
+  <tbody id="tbody_{$T.shop$index}">
+  {#foreach $T.shop.goodItemList as goods}
+  <TR>
+    <TD >{$T.goods$index+1}</TD>
+    <TD >{#if $T.goods.orderNo != null} {$T.goods.orderNo} {#/if}</TD>
+    <TD >{#if $T.goods.barcode != null} {$T.goods.barcode} {#/if}</TD>
+    <TD >{#if $T.goods.goodName != null} {$T.goods.goodName} {#/if}</TD>
+    <TD >{#if $T.goods.goodSku != null} {$T.goods.goodSku} {#/if}</TD>
+    <TD >{#if $T.goods.goodCode != null} {$T.goods.goodCode} {#/if}</TD>
+    <TD >{#if $T.goods.unit != null} {$T.goods.unit} {#/if}</TD>
+    <TD >{#if $T.goods.sumNumber != null} {$T.goods.sumNumber} {#/if}</TD>
+    <TD >{#if $T.goods.salePrice != null} {$T.goods.salePrice} {#/if}</TD>
+    <TD >{#if $T.goods.buyerName != null} {$T.goods.buyerName} {#/if}</TD>
+    <TD >{#if $T.goods.buyerTel != null} {$T.goods.buyerTel} {#/if}</TD> 
+  </TR>
+  {#/for}
+ </tbody>      
+<tfoot>
+  <tr>
+    <TD colspan="11" style="border-width: 0px 1px 1px 1px;">
+      <table width="100%">
+         <tr>
+           <TD>退货地址：{#if $T.goods.backerInfo != null} {$T.goods.backerInfo} {#/if} </TD>
+           <td>
+             <font tdata="PageNO">第##页</span> 共<font tdata="PageCount" >##</font></span>页
+           </td>
+       </tr>      
+      </table>
+    </TD> 
+ </tr>  
+ </tfoot>       
+</table>
+</div>
+{#/for}
+</textarea>
+<div id="div_printData"></div>		
+</body>
+</html>

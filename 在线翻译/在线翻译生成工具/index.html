@@ -1,0 +1,265 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<style type="text/css">
+	body{
+		margin: 0px;
+	}
+	div h1{text-align: center;}
+	textarea { width: 100%; height: 460px;margin-top: 0px;}
+	.divcontextarea{
+		width: 100%; float: left;height: 300px;
+		margin-top: 20px;
+	}
+</style>
+<body>
+<div> <input type="button" name="trange" id="trange" value="转化"  style="width: 100%; height: 50px;"/></div>	
+<div style="background-color:orchid; " class="divcontextarea">
+	<h1>	<span>前缀_原始中文:</span><input type="text" id="index"  /></h1>
+	<textarea style="" id="orcnarea">
+橘子
+努力
+我有一个梦想
+让世界和平	
+	</textarea>
+</div>
+
+<div style="background-color: red; " class="divcontextarea">
+	<h1>中文</h1>
+	<textarea style="" id="idarea">
+
+	</textarea>
+</div>
+<div  style="background-color: blue; " class="divcontextarea">
+		<h1>英文</h1>
+		<textarea style="" id="enarea" ></textarea>
+	
+</div>
+<div  style="background-color:plum;" class="divcontextarea">
+		<h1>日文un</h1>
+		<textarea style="" id="jngarea" ></textarea>
+	
+</div>
+<div  style="background-color:yellow;" class="divcontextarea">
+	<h1>中文un:</h1>
+
+		<textarea id="uncharea"></textarea>
+</div>
+
+
+<div  style="background-color:chartreuse;" class="divcontextarea">
+	<h1>中文粘贴:</h1>
+
+		<textarea id="copycharea"></textarea>
+</div>
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="./md5.js"></script>
+<script type="text/javascript">
+var appid = '20170926000085269';
+var key = 'eDBH2JvjqXcYw38hktv1';
+var salt = (new Date).getTime();
+var query = 'apple';
+var orgmes="";
+	$("#trange").click(function(){
+		orgmes=new Array();
+		$("#enarea").val("");
+		$("#enarea").val("");
+		$("#jngarea").val("");
+		$("#idarea").val("");
+		var content=$("#orcnarea").val();
+	
+		if(content==""){
+			alert("原始数据为空");
+			return ;
+		}
+		 query=content;
+		var tranen=new translate("zh","en");
+var tranjp=new translate("zh","jp");
+
+	var  data = tranen.ajax($("#enarea"),	tranjp);
+	
+	})
+		 
+function translate(from,to){
+	this.from=from;
+	this.to=to;
+	this.str1 = appid + query + salt +key;
+     this.sign = MD5(this.str1);
+}	
+
+
+translate.prototype.ajaxjp=function(thisObj){
+	var _this=thisObj;
+	var result="";
+	$.ajax({
+    url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+    type: 'get',
+    dataType: 'jsonp',
+    data: {
+        q: query,
+        appid: appid,
+        salt: salt,
+        from: _this.from,
+        to: _this.to,
+        sign: _this.sign
+    },
+    success: function (data) {
+	_this.setvalue(data,$("#jngarea"));
+  
+  
+    	} 
+	});
+	return result;
+}
+
+
+translate.prototype.ajax=function(obj,func){
+	var _this=this;
+	var result="";
+	$.ajax({
+    url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+    type: 'get',
+    dataType: 'jsonp',
+    data: {
+        q: query,
+        appid: appid,
+        salt: salt,
+        from: _this.from,
+        to: _this.to,
+        sign: _this.sign
+    },
+    success: function (data) {
+  	indexid(data);
+_this.setvalue(data,$("#enarea"));
+  toChUnicode();
+  copydat();
+func.ajaxjp(func);
+  
+  
+    	} 
+	});
+	return result;
+}
+
+translate.prototype.setvalue=function(data,obj){
+	var arrayl=new Array();
+   for(var i=0;i<data.trans_result.length;i++){
+   	for(var j=0;j<orgmes.length;j++){
+   		if(data.trans_result[i].src==orgmes[j].right){
+   			var resudst=data.trans_result[i].dst;
+   			  if(obj.selector  != "#enarea"){
+				resudst=toUnicode(resudst);
+  			}
+   			   arrayl.push("#"+orgmes[j].right);
+   			 arrayl.push(orgmes[j].left +"="+resudst);
+   		}
+   	}
+   }
+  var res= arrayl.join("\r\n");
+  $(obj).val(res);
+}
+
+function toChUnicode(){
+		var arrayl=new Array();
+		for(var j=0;j<orgmes.length;j++){
+			   arrayl.push("#"+orgmes[j].right);
+			   var resudst=toUnicode(orgmes[j].right);
+   			 arrayl.push(orgmes[j].left +"="+resudst);
+		}
+		  var res= arrayl.join("\r\n");
+  $("#uncharea").val(res);
+}
+function toUnicode(str) {
+var temp,
+		i = 0,
+		r = '',
+		len = str.length;
+		 
+		for (; i < len; i++) {
+		temp = str.charCodeAt(i).toString(16);
+		 
+		while ( temp.length < 4 )
+		temp = '0' + temp;
+		 
+		r += '\\u' + temp;
+		};
+		 
+		return r;
+}
+
+function copydat(){
+	
+			var arrayl=new Array();
+		for(var j=0;j<orgmes.length;j++){
+			   arrayl.push("#"+orgmes[j].right);
+
+   			 arrayl.push('<spring:message code="'+orgmes[j].left+'"></spring:message>');
+		}
+		  var res= arrayl.join("\r\n");
+  $("#copycharea").val(res);
+	
+}
+function indexid(resdata){
+
+  var indexid =	$("#index").val();
+  var arr=new Array();
+  for(var i=0;i<resdata.trans_result.length;i++){
+
+//if(data.trans_result[i].src==orgmes[j].right){
+ //   			var resudst=data.trans_result[i].dst;
+  	  	var strName=indexid;
+  	  var getlongIndex = resdata.trans_result[i].dst.split(" ");
+  	  if(getlongIndex.length<=3){
+
+  	  	for(var j=0;j<getlongIndex.length;j++){
+  	  		strName +="_"+getlongIndex[j].toLowerCase();
+  	  	}
+	strName += "="+ resdata.trans_result[i].src
+  	  }
+  	  else if(getlongIndex.length  >3){
+  	   for(var j=0;j<getlongIndex.length;j++){
+  	  	  	if(j==7){
+  	  	 		break;
+  	  	 	}
+  	  	 else if(j<3){
+  	  	 	strName +="_"+getindex(getlongIndex[j],3);
+  	  	 }
+  	  	 else if(j<=5){
+  	  	 		 	strName +="_"+getindex(getlongIndex[j],2);
+  	  	 }else {
+  	  	 			 	strName +="_"+getindex(getlongIndex[j],1);
+  	  	 }
+  	  	}
+  	   	strName += "="+ resdata.trans_result[i].src
+  	  	//取前三个字符
+  	  }
+
+  	  else{
+  	  	alert("哈哈哈，你出错了。。。。");
+  	  }
+  	  if(indexid==""){
+  	  	strName=strName.substr(1,strName.length);
+  	  }
+  	  var or =strName.split("=");
+  		var objec=new Object();
+  			objec.left=or[0].trim();
+			 objec.right=or[1].trim();
+		orgmes.push(objec);
+  	    	  	arr.push(strName)
+  }
+  var res= arr.join("\r\n");
+  $("#idarea").val(res);
+  
+}
+function getindex(obj, index){
+	if(obj.length<index){
+		return  obj.toLowerCase();
+	}else{
+			return  obj.substr(0,index).toLowerCase();
+	}
+}
+
+
+</script>
+</body>

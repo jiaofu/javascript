@@ -1,0 +1,172 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<style type="text/css">
+	body{
+		margin: 0px;
+	}
+	div h1{text-align: center;}
+	textarea { width: 98.5%; height: 920px;margin-top: 0px;}
+</style>
+<body>
+<div> <input type="button" name="trange" id="trange" value="转化"  style="width: 100%; height: 50px;"/></div>	
+<div style="width: 22%;float: left;background-color: red; height: 1000px;">
+	<h1>原始中文</h1>
+	<textarea style="" id="cnarea">
+apple=橘子
+Strive=努力
+i_have_a_dream=我有一个梦想
+World_peace=让世界和平	
+	</textarea>
+</div>
+<div  style="width: 22%; float: left;height: 1000px;background-color: blue; margin-left: 20px;">
+		<h1>英文</h1>
+		<textarea style="" id="enarea"></textarea>
+	
+</div>
+<div  style="width: 22%; float: left;height: 1000px;background-color:brown;margin-left: 20px;">
+		<h1>日文un</h1>
+		<textarea style="" id="jngarea"></textarea>
+	
+</div>
+<div  style="width: 22%;float: left;height: 1000px;background-color:yellow;margin-left: 20px;">
+	<h1>	 中文un:</h1>
+
+		<textarea id="uncharea"></textarea>
+</div>
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="./md5.js"></script>
+<script type="text/javascript">
+var appid = '20170926000085269';
+var key = 'eDBH2JvjqXcYw38hktv1';
+var salt = (new Date).getTime();
+var query = 'apple';
+var orgmes="";
+	$("#trange").click(function(){
+		orgmes=new Array();
+		$("#enarea").val("");
+		$("#enarea").val("");
+		$("#jngarea").val("");
+		$("#idarea").val("");
+		var content=$("#cnarea").val();
+	
+		if(content==""){
+			alert("原始数据为空");
+			return ;
+		}
+		var contents=content.split("\n");
+			for(var i=0;i<contents.length;i++){
+			if(contents[i].trim()==""){
+			 	continue;
+			 }
+				var objec=new Object();
+			 var  equ=	contents[i].split("=");
+		
+			 if(equ.length >2){
+			 	alert("数据出错");
+			 	return;
+			 }
+			 if(equ.length==1){
+		    	 	alert("数据出错,没有value");
+		    	 	 	return;
+			 }else{
+			 	objec.left=equ[0].trim();
+			 	objec.right=equ[1].trim();
+			 }
+			 
+			orgmes.push(objec);
+			}
+		var rightarr=new Array()
+		for(var i=0;i<orgmes.length;i++){
+			rightarr.push(orgmes[i].right)
+		}
+		
+		 query=rightarr.join("\n");
+		var tranen=new translate("zh","en");
+		var tranjp=new translate("zh","jp");
+		tranen.ajax($("#enarea"));
+		tranjp.ajax($("#jngarea"));
+		toChUnicode();
+	})
+		 
+function translate(from,to){
+	this.from=from;
+	this.to=to;
+	this.str1 = appid + query + salt +key;
+     this.sign = MD5(this.str1);
+}	
+translate.prototype.ajax=function(obj){
+	var _this=this;
+	var result="";
+	$.ajax({
+    url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+    type: 'get',
+    dataType: 'jsonp',
+    async:false,
+    data: {
+        q: query,
+        appid: appid,
+        salt: salt,
+        from: _this.from,
+        to: _this.to,
+        sign: _this.sign
+    },
+    success: function (data) {
+    	result=data;
+		_this.setvalue(data,obj)
+        console.log(data);
+            	return data;
+    	} 
+	});
+	
+}
+translate.prototype.setvalue=function(data,obj){
+	var arrayl=new Array();
+   for(var i=0;i<data.trans_result.length;i++){
+   	for(var j=0;j<orgmes.length;j++){
+   		if(data.trans_result[i].src==orgmes[j].right){
+   			var resudst=data.trans_result[i].dst;
+   			  if(obj.selector  != "#enarea"){
+				resudst=toUnicode(resudst);
+  			}
+   			   arrayl.push("#"+orgmes[j].right);
+   			 arrayl.push(orgmes[j].left +"="+resudst);
+   		}
+   	}
+   }
+  var res= arrayl.join("\r\n");
+  $(obj).val(res);
+}
+
+function toChUnicode(){
+		var arrayl=new Array();
+		for(var j=0;j<orgmes.length;j++){
+			   arrayl.push("#"+orgmes[j].right);
+			   var resudst=toUnicode(orgmes[j].right);
+   			 arrayl.push(orgmes[j].left +"="+resudst);
+		}
+		  var res= arrayl.join("\r\n");
+  $("#uncharea").val(res);
+}
+function toUnicode(str) {
+var temp,
+i = 0,
+r = '',
+len = str.length;
+ 
+for (; i < len; i++) {
+temp = str.charCodeAt(i).toString(16);
+ 
+while ( temp.length < 4 )
+temp = '0' + temp;
+ 
+r += '\\u' + temp;
+};
+ 
+return r;
+}
+
+
+</script>
+</body>

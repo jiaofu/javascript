@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>发货</title>
+	<link rel="stylesheet" type="text/css" href="../../static/tsh/1.0.0/themes/easyui.css">
+   	<link rel="stylesheet" type="text/css" href="../../static/tsh/1.0.0/themes/default/icons.css">
+    <link rel="stylesheet" type="text/css" href="../../static/home/1.0.0/home.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/tsh/1.0.0/themes/style.css?gversion=1.0.0">
+    <script src="../../static/tsh/1.0.0/jquery.min.js?gversion=1.0.0"></script>
+    <script src="../../static/tsh/1.0.0/jquery.easyui.min.js?gversion=1.0.0"></script>
+    <script src="../../../static/tsh/1.0.0/jquery.easyui.extend.min.js?gversion=1.0.0"></script>
+    <script src="../../static/order/1.0.0/sendOrder.js"></script>
+    <script src="../../../static/tsh/1.0.0/plugins/datagrid-cellediting.js"></script>
+    <script language="javascript" src="../../static/order/1.0.0/LodopFuncs.js"></script>
+    <script type="text/javascript" src="../../../static/order/1.0.0/jquery-jtemplates.js"></script>    
+    <script src="../../../static/order/1.0.0/printOrder.js"></script>       
+   	<style type="text/css">
+   		.datagrid-btable td{
+			padding:10px 4px;
+		}
+		.datagrid-header {
+			position: absolute; visibility: hidden;
+		}
+		#editAdress,#logisticsService,#confirmReceipt{			margin-top:50px;border: 1px solid #E3E8EC;padding-bottom:20px;		}
+		.font_16{			font:16px/32px 'Microsoft Yahei';background:#F2F7FD;padding:0 20px;margin-bottom:5px;		}
+		.margin_L_15{margin-left: 15px;}
+		._cb{clear:both;}
+
+		.listbox{width: 50%; float: left;border: 1px solid #E3E8EC; overflow: hidden;    margin-top: 50px;}
+		.br{border-right: 1px solid #e3e8ec;}
+		.listbox div{overflow: hidden;}
+		.w100{width: 100%}
+		.w50{width: 50%}
+		.w90px{ width: 70px; padding-top: 40px;}
+		.imgdiv{ width: 100px; height: 100px; margin-top: 10px; margin-bottom: 10px; border: 1px solid gray; overflow: hidden;}
+		.fl{ float: left; 		}
+		.fr{ float: right;	}
+		.pd20{padding: 0 20px; line-height: 20px; box-sizing: border-box;}
+		.cont{padding: 10px;}
+		.tr{text-align: right;}
+		.pagebottom{text-align:center; padding: 25px 20px 40px; line-height:20px; }
+		.pagebottom a{     margin: 0 10px 0;}
+		.btnsend{ width:100px; text-align:center;  margin-top:30px;}
+		.text-danger{  color: #ff7070;}
+   	</style>
+</head>
+<body style="margin:0 20px" >
+   <object id="LODOP_OB_order"  width=0 height=0> 
+    <embed id="LODOP_EM_order" type="application/x-print-lodop" width=0 height=0 pluginspage="install_lodop.exe"></embed>
+   </object>
+	<div class="tsh-title tsh-title2">
+	   <h3>
+	        <div class="title-border"></div>
+	        <span class="t1">发货</span>
+	    </h3>
+	</div>
+	<div id="editAdress">
+		<div class="font_16">第一步 <span style="margin-left:15px;">确认发货/退货信息</span></div>
+		<div style=" padding:15px 0 0 20px;">
+			<div style="float:left;display: inherit;">
+				<p id="sendAddress">发货信息：<span></span> <span></span> <span></span> <span></span></p>
+			</div>
+			<div style="float:right; display: inherit;"><a id="sellerSenda" href="javascript:;" class="btn btn-1" style="margin:-10px 20px 0px 10px;">修改商家发货地址</a></div>
+		</div>
+		<div class="_cb"></div>
+		<div style=" padding:15px 0 0 20px;">
+			<div style="float:left;display: inherit;">
+				<p id="backAddress">退货地址：<span></span> <span></span> <span></span> <span></span></p>
+			</div>
+			<div style="float:right; display: inherit;"><a id="sellerBackb" href="javascript:;" class="btn btn-1" style="margin:-10px 20px 0px 10px;">修改商家退货地址</a></div>
+		</div>
+		
+		<div class="_cb"></div>
+		</div>
+
+
+	  
+	  
+	  
+	  <div id="sellerSend" class="panel window" style="display:none; width: 598px; left: 382px; top: 136px; z-index: 9001;">
+	  <div class="panel-header panel-header-noborder window-header" style="width: 578px;">
+	  <div class="panel-title">发货地址修改</div><div class="panel-tool">
+	  <a href="javascript:void(0)" class="panel-tool-close"></a></div></div>
+	  
+	  <div id="Senddialog" title="" class="panel-body panel-body-noborder window-body" >
+		<div style="margin-left: 20px; margin-top: 20px; margin-bottom: 20px;"></div>
+	  </div>
+	  </div>
+	  
+	
+
+		  
+	  <div id="sellerBack" class="panel window" style="display:none; width: 598px; left: 382px; top: 136px; z-index: 9001;">
+	  <div class="panel-header panel-header-noborder window-header" style="width: 578px;">
+	  <div class="panel-title">退货地址修改</div><div class="panel-tool">
+	  <a href="javascript:void(0)" class="panel-tool-close"></a></div></div>
+
+  		<div id="Backdialog" title="" class="panel-body panel-body-noborder window-body" >
+	 		<div style="margin-left: 20px; margin-top: 20px; margin-bottom: 20px;"></div>
+
+	</div>
+	</div>
+
+	<div id="logisticsService" >
+		<div class="font_16">第二步 <span class="margin_L_15">物流服务</span></div>
+			<div style=" padding:15px 0 0 20px;">
+			<div style="float:left;display: none;">
+				<p id="countyAddress">县域地址：<span></span> <span></span> <span></span> <span></span></p>
+			</div>
+
+		</div>
+		<div class="_cb"></div>
+			<div style=" padding:15px 0 0 20px;">
+			<div style="float:left;display: inherit;">
+				<p>配送方式：<span>
+						<input id="radio-1" type="radio" value="0" class="radio"  name="lw" checked>
+	                    <label for="radio-1">配送到县域</label>
+	                    <input id="radio-2" type="radio"  value="1" class="radio"  name="lw">
+	                    <label for="radio-2">配送到网点</label>
+				</p>
+			</div>
+			<br><br>
+			<div style="float:left;display: inherit;">
+				<p>物流公司：<span><input class="easyui-combobox" id="logisticsCompany" style="width:170px; height:30px;"></span><span class="text-danger">*</span></p>
+			</div>
+			
+		</div>
+		<div class="_cb"></div>
+					<div style=" padding:15px 0 0 20px;">
+			
+
+		</div>
+	
+	</div>
+	<div id="confirmReceipt" style="height: 0px;">
+		<div class="font_16" id="dataGrid">第三步 <span  class="margin_L_15">确认收货信息并填写订单号</span></div>
+	
+	</div>
+	<!-- <div id="consignment" style="display:none; margin-top: 0px; height: 0px;"></div> 
+	<input  id="OperatorType" style="display:none" value="" type="hidden">
+  <input id="logisticsNameid" style="display:none" type="hidden" value="1"  /> -->
+ 	
+ 	<div style="margin-top:20px;">
+		<div class="font_16" id="dataGrid1">
+		</div>
+	</div>
+ 	
+ 	<!-- <div id="pass-div" class="easyui-dialog" title="My Dialog"   style="width:400px; " closed="true">
+			
+					<span>导入文件中包括系统未知物流公司，可能造成无法显示物流跟踪信息，确定要导入？
+						
+					按钮包括确定和取消，如果点取消则不导入</span>
+			
+		
+	</div> -->
+ 	
+ 	
+ <div class="listbox w100 pagebottom">
+<p class='c'> 点击发货后，货物状态将更改为“已发货”</p><p>&nbsp;</p>
+ 		<a class='btn' href='#' onclick="openPrintWin();">打印拣货单</a>
+ 		<a class='btn' href="javascript:printOrder.print('LODOP_OB_order','LODOP_EM_order');">打印快递单</a>
+ 		<a class='btn' id="sendout" href='javascript:;'  >发货</a>
+ 		<!--a class='btn' id="sendout" href='#' onclick="getGoodsByLogicNo();" >物流单</a-->
+ 		
+ </div>
+</body>
+</html>
+

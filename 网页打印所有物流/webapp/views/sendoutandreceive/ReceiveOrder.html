@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <title>淘实惠管理系统</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/tsh/1.0.0/themes/easyui.css?gversion=1.0.0">
+    <link rel="stylesheet" type="text/css" href="../../../static/tsh/1.0.0/themes/style.css?gversion=1.0.0">
+    <script src="../../../static/tsh/1.0.0/jquery.min.js?gversion=1.0.0"></script>
+    <script src="../../../static/tsh/1.0.0/jquery.easyui.min.js?gversion=1.0.0"></script>
+    <script src="../../../static/tsh/1.0.0/jquery.easyui.extend.min.js?gversion=1.0.0"></script>
+    <script src="../../../static/tsh/1.0.0/locale/easyui-lang-zh_CN.js?gversion=1.0.0"></script>
+     <script src="../../../static/project/lib/jquery-easyui-1.4.4/style.js"></script>
+	<script src="../../../static/project/js/jsform.js"></script>
+    
+    
+    <style>
+      .form td{ padding: 10px 0}
+    </style>
+</head>
+<script type="text/javascript">
+function receiveOrder(){
+	this.template=""
+}
+
+</script>
+<body style="margin:0 20px;">
+  <div id="tsh-title">
+    <h3><span class="t1">模拟收获</span><span class="t2"></span>  </h3>
+    <div class="title-border"></div>
+  </div>
+  <form id="saveUserForm" method="post" class="form">
+            <table cellpadding="5">
+            	<tr>
+            		<td>&nbsp;</td>
+            		<td><input type="button" value="使用模板" onclick="cpTemplate()"></td>
+            	</tr>
+                <tr>
+                    <td style="text-align:right"><span class="text-red">*</span>提交参数：</td>
+                    <td>
+<!--                     	<input class="easyui-textbox" style="width:270px; height:30px;" type="text" name="orderNo" data-options="required:true"></input> -->
+                    	<input class="easyui-textbox" id="jsonStr" name="jsonStr" data-options="multiline:true" style="width:600px;height:400px"></input>
+                    	<input type="radio" value="1" checked="checked" name="isBatch">批发</input>
+                    	<input type="radio" value="0" name="isBatch">零售</input>
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="btn btn-1" onclick="_ajaxSubmit()">下单</a></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right"><span class="text-red">*</span>返回结果：</td>
+                    <td>
+						<textarea class="easyui-textbox" id="jsonStr2" name="jsonStr2"  rows="10" cols="10" style="width:600px;height:400px"></textarea>
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="btn btn-1" onclick="_ajaxSubmit2()">数据显示</a></td>
+                </tr>
+            </table>
+        </form>
+        <div style="text-align:center;padding:5px">
+
+        </div>
+</body>
+</html>

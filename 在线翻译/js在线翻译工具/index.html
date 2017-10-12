@@ -1,0 +1,155 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<style type="text/css">
+	body{
+		margin: 0px;
+	}
+	div h1{text-align: center;}
+	textarea { width: 98.5%; height: 920px;margin-top: 0px;}
+</style>
+<body>
+<div> <input type="button" name="trange" id="trange" value="转化"  style="width: 100%; height: 50px;"/></div>	
+<div style="width: 22%;float: left;background-color: red; height: 1000px;">
+	<h1>原始中文</h1>
+	<textarea style="" id="cnarea"></textarea>
+</div>
+<div  style="width: 22%; float: left;height: 1000px;background-color: blue; margin-left: 20px;">
+		<h1>英文</h1>
+		<textarea style="" id="enarea"></textarea>
+	
+</div>
+<div  style="width: 22%; float: left;height: 1000px;background-color:brown;margin-left: 20px;">
+		<h1>日文</h1>
+		<textarea style="" id="jngarea"></textarea>
+	
+</div>
+<div  style="width: 22%;float: left;height: 1000px;background-color:yellow;margin-left: 20px;">
+	<h1>	<span>前缀:</span><input type="text" id="index"  /></h1>
+
+		<textarea id="idarea"></textarea>
+</div>
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="./md5.js"></script>
+<script type="text/javascript">
+var appid = '20170926000085269';
+var key = 'eDBH2JvjqXcYw38hktv1';
+var salt = (new Date).getTime();
+var query = 'apple';
+	$("#trange").click(function(){
+		$("#enarea").val("");
+		$("#enarea").val("");
+		$("#jngarea").val("");
+		$("#idarea").val("");
+		var content=$("#cnarea").val();
+	
+		if(content==""){
+			alert("原始数据为空");
+			return ;
+		}
+		var contents=content.split("\r\n");
+		 query=contents.join("\\");
+		var tranen=new translate("zh","en");
+		var tranjp=new translate("zh","jp");
+		tranen.ajax($("#enarea"));
+		tranjp.ajax($("#jngarea"));
+	})
+		 
+function translate(from,to){
+	this.from=from;
+	this.to=to;
+	this.str1 = appid + query + salt +key;
+     this.sign = MD5(this.str1);
+}	
+translate.prototype.ajax=function(obj){
+	var _this=this;
+	var result="";
+	$.ajax({
+    url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+    type: 'get',
+    dataType: 'jsonp',
+    async:false,
+    data: {
+        q: query,
+        appid: appid,
+        salt: salt,
+        from: _this.from,
+        to: _this.to,
+        sign: _this.sign
+    },
+    success: function (data) {
+    	result=data;
+		_this.setvalue(data,obj)
+        console.log(data);
+            	return data;
+    	} 
+	});
+	
+}
+translate.prototype.setvalue=function(data,obj){
+	var arrayl=new Array();
+   for(var i=0;i<data.trans_result.length;i++){
+   		arrayl.push(data.trans_result[i].dst);
+   }
+  var res= arrayl.join("\r\n");
+  $(obj).val(res);
+  if(obj.selector  == "#enarea"){
+  	indexid(data);
+  }
+}
+function indexid(resdata){
+	var contents=new Array();
+   for(var i=0;i<resdata.trans_result.length;i++){
+   		contents.push(resdata.trans_result[i].dst);
+   }
+  var indexid =	$("#index").val();
+  var arr=new Array();
+  for(var i=0;i<contents.length;i++){
+
+  	  	var strName=indexid;
+  	  var getlongIndex = contents[i].split(" ");
+  	  if(getlongIndex.length<=3){
+
+  	  	for(var j=0;j<getlongIndex.length;j++){
+  	  		strName +="_"+getlongIndex[j].toLowerCase();
+  	  	}
+
+  	  }
+  	  else if(getlongIndex.length  >3){
+  	   for(var j=0;j<getlongIndex.length;j++){
+  	  	  	if(j==7){
+  	  	 		break;
+  	  	 	}
+  	  	 else if(j<3){
+  	  	 	strName +="_"+getindex(getlongIndex[j],3);
+  	  	 }
+  	  	 else if(j<=5){
+  	  	 		 	strName +="_"+getindex(getlongIndex[j],2);
+  	  	 }else {
+  	  	 			 	strName +="_"+getindex(getlongIndex[j],1);
+  	  	 }
+  	  	}
+  	  	//取前三个字符
+  	  }
+
+  	  else{
+  	  	alert("哈哈哈，你出错了。。。。");
+  	  }
+  	    	  	arr.push(strName)
+  }
+  var res= arr.join("\r\n");
+  $("#idarea").val(res);
+  
+}
+function getindex(obj, index){
+	if(obj.length<index){
+		return  obj.toLowerCase();
+	}else{
+			return  obj.substr(0,index).toLowerCase();
+	}
+}
+
+
+</script>
+</body>

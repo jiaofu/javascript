@@ -1,0 +1,43 @@
+.item{
+	line-height:100px;
+	font-size:50px;
+	height:100px;
+	clear:both;
+}
+.item .text{
+	display: inline-block;
+	float:left;
+}
+
+.close {
+
+  display: none;
+  width: 25px;
+  height: 25px;
+  overflow: hidden;
+  border-radius:12px;
+/*  background:black;*/
+  opacity:0.5;
+  	display:inline-block;
+}
+.close:hover{
+	cursor:pointer;
+	opacity:1;
+}
+.close::before, .close::after {
+  content: '';
+  position: absolute;
+  width: 80%;
+  top: 50%;
+  left: 10%;
+  height: 3px;
+  margin-top: -3px;
+  border-radius: 3px;
+  background: black;
+}
+.close::before {
+  transform: rotate(45deg);
+}
+.close::after {
+  transform: rotate(-45deg);
+}

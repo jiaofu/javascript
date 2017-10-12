@@ -1,0 +1,149 @@
+
+
+
+			.head1 {
+				display: block;
+				font-size: 2.5em;
+				font-weight: bold;
+				text-align: center;
+				width: 25mm;
+			}
+			
+			.head5 {
+				display: block;
+				font-weight: bold;
+				text-align: center;
+				width: 25mm;
+			}
+			
+			.autowidth{
+				width: 200.3mm;
+			}
+			body {
+				/*width: 148mm;*/
+				width: 209.3mm;
+			}
+			
+			body,
+			tr,
+			td {
+				margin: 0;
+				padding: 0;
+				font-family: 微软雅黑;
+				font-size: 12px;
+			}
+			
+			.floatDiv {
+				float: left;
+				margin-left: 20px;
+			}
+			
+			.title {
+
+				float: left;
+				margin-left: 0px;
+				clear: both;
+			}
+			
+			.barcodeImg {
+				margin: 10px 0px;
+				float: left;
+			}
+			
+			.tbody {
+				clear: both;
+				margin: 10px;
+				margin-left: 10px;
+			}
+			
+			tr,
+			td {
+				border-bottom: 1px dotted gray;
+				word-break: break-all; word-wrap:break-word;
+			}
+			
+			table {
+				clear: both;
+				border-collapse: collapse;
+				text-align: left;
+				
+			}
+			
+			.tbody table{
+				table-layout: fixed;
+			}
+			
+			th {
+				border-bottom: 1px solid gray;
+				text-align: left;
+			}
+			
+			.tbottom {
+				border-top: 1.5mm solid gray;
+				width: 209.3mm;
+				position: absolute;
+			
+		        
+				margin-left: 0px;
+				bottom: 5mm;
+			
+			}
+			
+			.lno {
+				
+				/*height: 209.3mm;
+				width: 148mm;*/
+				width: 210mm;
+				height: 140mm;
+				position: relative;
+				border-bottom: 1mm  solid gray;
+			
+				page-break-before:always;
+			}
+			
+			.top {
+				margin-top: 10px;
+			}
+			
+			.butprint {
+				width: 60px;
+				height: 30px;
+				border: 1px solid #D4CD49;
+				background-color: rgb(77, 144, 254);
+				position: fixed;
+				left: 249mm;
+				top: 20px;
+			}
+			
+			.hr1 {
+				border-top: 1px solid gray;
+				width: 209.3mm;
+				position: absolute;
+				padding-top: 0px;
+				margin-top: 0px;
+	
+			}
+			
+
+	
+		
+
+
+			.page_num {
+				float: right;
+				margin-right: 20px
+			}
+			
+			
+			#aftertr th:not(:first-child)
+			{
+			padding-left: 10px;
+			}
+			.fortr td:not(:first-child)
+			{
+			padding-left: 10px;
+			}
+			#lasttr {
+				font:italic bold 12px/30px arial,sans-serif;
+			}
+		

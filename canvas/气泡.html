@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {  
+                margin: 0;  
+                padding: 0;  
+            }  
+            html,body{  
+                height:100%;  
+                width:100%;  
+            }  
+    
+		</style>
+	</head>
+	<body >
+		 <canvas id="canvas"  width="500" height="500"></canvas>
+	</body>
+	<script>
+	
+		  var ctx = document.getElementById('canvas').getContext('2d');
+			
+			ctx.arc(50,50,50,0,2*Math.PI,false);
+		  ctx.stroke = 'rgba(0,153,255,0.4)';   
+	
+		  
+		   var radgrad = ctx.createRadialGradient(45,45,10,52,50,30);
+  radgrad.addColorStop(0, '#A7D30C');
+  radgrad.addColorStop(0.6, '#019F62');
+  
+  
+  
+    var radgrad = ctx.createRadialGradient(45,45,10,52,50,30);
+  radgrad.addColorStop(0, '#A7D30C');
+  radgrad.addColorStop(0.2, '#019F62');
+  radgrad.addColorStop(0.3, 'rgba(1,159,98,0)');
+  
+//
+//radgrad.addColorStop(0.4, '#FF5F98');
+//radgrad.addColorStop(0.75, '#FF0188');
+//radgrad.addColorStop(0.35, 'rgba(255,1,136,0)');
+//
+//radgrad.addColorStop(0.6, '#00C9FF');
+//radgrad.addColorStop(0.5, '#00B5E2');
+//radgrad.addColorStop(0.66, 'rgba(0,201,255,0)');
+//
+//radgrad.addColorStop(0.96, '#F4F201');
+//radgrad.addColorStop(0.8, '#E4C700');
+//radgrad.addColorStop(0.7, 'rgba(228,199,0,0)');
+  radgrad.addColorStop(0.8, 'rgba(1,159,98,0)');
+
+		
+			 //设置填充的背景色
+ ctx.fillStyle=radgrad;
+ ctx.globalAlpha=0.3
+ //进行填充
+ ctx.fill();
+		
+	</script>
+</html>
