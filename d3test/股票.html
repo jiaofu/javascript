@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/d3.v3.min.js"></script>
+		<style>
+			body{
+			margin: 0px;
+			}
+			
+			#contains{
+				background-color: #000000;
+				width: 400px;
+				height: 600px;
+					
+			}
+
+.axis path,
+.axis line{
+	fill: none;
+	stroke: red;
+	shape-rendering: crispEdges;
+}
+
+.axis text {
+	font-family: sans-serif;
+	font-size: 11px;
+	color: red;
+}
+	.MyRect {
+		fill: steelblue;
+	}
+
+	.MyText {
+		fill: white;
+		text-anchor: middle;
+	}
+.upline{
+	z-index: 1;
+}
+.uprect{
+	z-index: 22;
+}
+
+		</style>
+	</head>
+	<body>
+		<div id="contains"></div>
+	</body>
+	<script>
+			var padding = {left:30, right:30, top:20, bottom:20};
+			var rectdata={width:2,padding:2};
+		//日期, 开盘,最低,最高,收盘,交易量,交易总金额
+    var dataset = [
+        ['2011-12-16', 25000, 24900, 26800, 26440, 1171773, 301397800000],
+        ['2011-12-19', 26210, 26000, 27490, 26960, 524161, 139321600000],
+        ['2011-12-20', 27100, 26650, 27590, 26880, 274802, 74424800000],
+        ['2011-12-21', 27140, 26290, 27650, 26390, 221804, 59984680000],
+        ['2011-12-22', 25960, 25560, 27200, 26800, 147229, 38684550000],
+        ['2011-12-23', 26520, 25820, 27170, 27090, 126590, 33734850000],
+        ['2011-12-26', 26710, 26490, 27320, 26710, 74700, 20098390000],
+        ['2011-12-27', 26450, 26020, 29380, 27070, 139441, 38593810000],
+        ['2011-12-28', 26470, 25130, 27420, 27120, 107477, 28446930000],
+        ['2011-12-29', 26610, 26610, 28300, 28120, 99828, 27707740000],
+        ['2011-12-30', 27970, 27800, 28690, 27870, 113659, 32088230000],
+        ['2012-01-04', 27920, 27700, 28550, 27970, 76590, 21546910000],
+        ['2012-01-05', 27940, 26880, 28420, 27100, 89823, 24886380000],
+        ['2012-01-06', 26600, 26600, 28210, 28140, 61342, 16822660000],
+        ['2012-01-09', 28090, 27610, 29550, 29380, 67159, 19259770000],
+        ['2012-01-10', 29380, 29000, 30300, 30120, 84051, 25057420000],
+        ['2012-01-11', 29950, 29100, 30200, 29870, 47952, 14267720000],
+        ['2012-01-12', 29620, 29620, 30950, 30380, 55554, 16817430000],
+        ['2012-01-13', 30480, 28950, 30580, 29870, 49726, 14716010000],
+        ['2012-01-16', 29500, 28130, 29770, 28280, 36006, 10566710000],
+        ['2012-01-17', 28580, 28500, 30920, 30870, 91777, 27101690000],
+        ['2012-01-18', 30540, 29180, 30900, 29730, 64588, 19505600000],
+        ['2012-01-19', 29730, 29370, 30600, 30210, 38141, 11527600000],
+        ['2012-01-20', 30100, 30100, 32220, 31890, 66314, 20721920000]
+    ];
+		
+		var width=400;
+		var height=600;
+	
+	var svg=d3.select("#contains").append("svg").attr("width",width).attr("height",height);
+	
+	var priceMin = d3.min(dataset, function (d) {
+    return d3.min(d.slice(1, 5))
+    });
+    
+    var priceMax = d3.max(dataset, function (d) {
+        return d3.max(d.slice(1, 5))
+    });
+    
+ 	var linear= d3.scale.linear()
+ 		.domain([priceMax ,priceMin])
+ 		.range([0,height-padding.top]);
+ 	
+ 	
+ 	var linearx= d3.scale.linear()
+ 		.domain([0,width])
+ 		.range([0,width]);
+ 
+ 	var yAxis = d3.svg.axis()
+		.scale(linear)
+		.orient("right")
+		.ticks(5);
+ 	
+ 		//添加y轴
+	svg.append("g")
+		.attr("class","axis")
+		.attr("transform","translate("  +(width-padding.left-padding.right+5) + "," + (padding.top-2) + ")")
+		.attr("fill","red")
+		.attr("opacity","0.5")
+		.call(yAxis);
+	
+
+
+    svg.selectAll('line.upline')
+        .data(dataset)
+        .enter()
+        .append('line')
+        .attr({
+            'x1': function (d, i) {
+                return i * (rectdata.width+rectdata.padding)+2;
+            },
+            'x2': function (d, i) {
+                return i * (rectdata.width+rectdata.padding)+2;
+            },
+            'y1': function (d, i) {
+      			return linear(d[3]);
+           
+            },
+            'y2': function (d, i) {
+               
+         	return  linear(d[2]);
+                
+                
+            },
+            "stroke": function (d) {
+                if (d[1] < d[4]) return 'red';
+                else return 'green';
+            },
+            "class":function(){
+            	return "upline"
+            }
+        });
+        
+    svg.selectAll('rect').data(dataset).enter().append('rect').attr({
+	 	
+	   'x': function (d, i) {
+            return i * (rectdata.width+rectdata.padding)+1;
+        },
+        'y': function (d, i) {
+
+
+            return  d3.min([linear(d[1]),linear(d[4])]);
+        },
+        'width': function (d, i) {
+            return rectdata.width;
+        },
+        'height': function (d, i) {
+        	if((d[1]-d[4])==0){
+                  return 1;
+        	}
+            return  Math.abs( linear(d[4]) -linear(d[1]));
+        },
+        "fill": function (d) {
+            if (d[1] < d[4]) return 'red';
+          
+        },
+        "stroke":function(d){
+        	  if (d[1] >= d[4]) return 'green';
+        },
+         "class":function(){
+            	return "uprect"
+            }
+	 });
+        
+        
+           var grid = svg.selectAll(".grid")  
+   .data(linear.ticks(5))  
+ 	.enter().append("g")  
+   .attr("class", "grid");  
+   
+   //横线  
+grid.append("line")
+ . attr("transform" ,"translate(0," + (padding.top-2) + ")")
+   .attr("y1", linear)  
+   .attr("y2", linear)  
+   .attr("x1", 0)  
+   .attr("x2", 500)
+   .attr("stroke", "#5A5A5A")
+   .attr("stroke-width", 1)
+   .style("stroke-dasharray", ("3, 3"))
+     .style("stroke-opacity", 0.9);    
+    
+    
+    
+
+    
+
+var line_generator = d3.svg.line()//d3中绘制曲线的函数
+.y(function(d, i){return linear(d[1]);})//曲线中x的值
+.x(function(d,i){return linearx(i*4+2);})//曲线中y的值
+.interpolate("cardinal")//把曲线设置光滑
+
+
+//fill:none;stroke:black;stroke-width:3
+d3.select("svg")
+.append("path")
+.attr("d", line_generator(dataset))
+.attr("stroke","blue")
+
+.attr("fill","none")
+.attr("stroke-width",1)
+  .style("opacity", 0.1)  
+        
+//      svg.selectAll('line.downline')
+//      .data(dataset)
+//      .enter()
+//      .append('line')
+//      .attr({
+//          'x1': function (d, i) {
+//             return i * (rectdata.width+rectdata.padding)+2;
+//          },
+//          'x2': function (d, i) {
+//             return i * (rectdata.width+rectdata.padding)+2;
+//          },
+//          'y1': function (d, i) {
+//             return height - linear(d[2]);
+//          },
+//          'y2': function (d, i) {
+//             if((d[1]-d[4])==0){
+//                return height - linear(d[1])+1;
+//      		}
+//           return height - linear(d[1]) + Math.abs(linear(d[1]) - linear(d[4]));
+//          },
+//          "stroke": function (d) {
+//              if (d[1] < d[4]) return 'red';
+//              else return 'green';
+//          },
+//          "class":function(){
+//          	return "downline"
+//          }
+//      });
+	 
+	</script>
+</html>
