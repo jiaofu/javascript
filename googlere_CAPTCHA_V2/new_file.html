@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>reCAPTCHA demo: Explicit render for multiple widgets</title>
+	
+	
+	<script type="application/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript">
+      var verifyCallback = function(response) {
+		      $('input[name="token"]').val(response);
+        alert(response);
+      };
+      var widgetId1;
+      var widgetId2;
+      var onloadCallback = function() {
+
+        grecaptcha.render('example3', {
+          'sitekey' : '6LdJ1MIUAAAAALJpkPBkQEya01P_7nsPXYb5BY0v',
+          'callback' : verifyCallback,
+          'theme' : 'dark'
+        });
+      };
+	  
+	  
+	  function aa(){
+	  	$.ajax({
+	  	  type: 'POST',
+	  	  url: "http://zs.coinfex.com:8080/api/test/orderV2",
+	  	  data: {"token":$('input[name="token"]').val()},
+	  	  success: function(result){
+	  		  alert(JSON.stringify(result));
+	  		  console.log(JSON.stringify(result))
+	  	  },
+	  	 contentType:"application/x-www-form-urlencoded",
+	  	});
+	  }
+	  
+    </script>
+  </head>
+  <body>
+    <!-- The g-recaptcha-response string displays in an alert message upon submit. -->
+ 
+    <!-- POSTs back to the page's URL upon submit with a g-recaptcha-response POST parameter. -->
+    <form action="?" method="POST">
+      <div id="example3"></div>
+      <br>
+	  
+	  <input type="text" name="token" placeholder="tolen" >
+	  
+	  <input type="button" id="formid"  name="submit" value="SUBMIT" onclick="aa()" >
+    </form>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
+  </body>
+</html>

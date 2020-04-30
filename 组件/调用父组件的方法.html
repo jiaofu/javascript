@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="vue.js"></script>
+	</head>
+	<body>
+		<div id="blog-posts-events-demo"  >
+	
+			<div :style="{ fontSize: postFontSize + 'em' }">
+				<blog-post     v-for="cc in posts"
+      v-bind:key="cc.id"
+      v-bind:cc="cc" ></blog-post>
+			</div>
+		</div>
+	</body>
+	<script type="application/javascript">
+	
+		Vue.component('blog-post', {
+			props: ['cc'],
+			template: `    <div class="blog-post">
+      <h3>{{ cc.title }}</h3>
+      <button v-on:click="alertMethod"  >
+        Enlarge text
+      </button>
+      <div v-html="cc.content"></div></div></div> `,
+	methods: {
+
+	alertMethod:function(){
+		this.$root.posts[2].title = this.$root.posts[2].title+"xxxxxxxx";
+	}
+	}
+});
+		new Vue({
+			el: '#blog-posts-events-demo',
+			data: {
+				posts: [{
+						id: 1,
+						name:"1A",
+						title: 'My journey with Vuexxxxxxxxx'
+					},
+					{
+						id: 2,
+						name:"2c",
+						title: 'Blogging with Vue'
+					},
+					{
+						id: 3,
+						name:"3D",
+						title: 'Why Vue is so fun'
+					}
+				],
+				
+				postFontSize: 1
+			}
+})</script></html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="vue.js"></script>
+	</head>
+	<body>
+		<div id="blog-posts-events-demo"  >
+			<div :style="{ fontSize: postFontSize + 'em' }">
+				<blog-post  @new-msg="onbigMore"  v-for="post in posts"
+      v-bind:key="post.id"
+      v-bind:post="post" ></blog-post>
+			</div>
+		</div>
+	</body>
+	<script type="application/javascript">
+		
+		// new-msg  之前写成 newMsg 一直找不到原因
+		// @new-msg="onbigMore"  绑定事件 要写在  子组件
+		//
+		Vue.component('blog-post', {
+			props: ['post'],
+			template: `    <div class="blog-post">
+      <h3>{{ post.title }}</h3>
+      <button  v-on:click="onEnlargeText">
+        Enlarge text
+      </button>
+      <div v-html="post.content"></div></div></div> `,
+	methods: {
+	onEnlargeText: function (enlargeAmount) {
+		var cc = new Object();
+		cc.al="al"
+	 this.$emit('new-msg', 0.1,cc)
+	}}
+});
+		new Vue({
+			el: '#blog-posts-events-demo',
+			data: {
+				posts: [{
+						id: 1,
+						name:"1A",
+						title: 'My journey with Vuexxxxxxxxx'
+					},
+					{
+						id: 2,
+						name:"2c",
+						title: 'Blogging with Vue'
+					},
+					{
+						id: 3,
+						name:"3D",
+						title: 'Why Vue is so fun'
+					}
+				],
+				postFontSize: 1
+			},
+	methods: {
+  onbigMore: function (enlargeAmount,cc) {
+	  alert(cc.al);
+	  alert("aaaaaaaa");
+	console.log("aaaaaaaaa")
+    this.postFontSize += enlargeAmount
+  },
+}})</script></html>

@@ -1,0 +1,93 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <!-- 国内使用 -->
+    <script type="text/javascript" charset="utf-8" src="//g.alicdn.com/sd/nch5/index.js?t=2015052012"></script>
+    <!-- 若您的主要用户来源于海外，请替换使用下面的js资源 -->
+    <!-- <script type="text/javascript" charset="utf-8" src="//aeis.alicdn.com/sd/nch5/index.js?t=2015052012"></script> -->
+	　<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+    <div id="__nc" style="margin-left:auto;margin-right:auto;width:80%;height:100px;padding-top:100px;">
+        <div id="nc"></div>
+    </div>
+
+    <script>  
+	var sendObject = new Object();
+	sendObject.password ="DzQDjSm5aWShdnyvjKyx0jFQBJp5pekifxMq4WpWE8hCOVITNzDAZxvmmANkqcDweRoaaAg1HsUlHyh2nuo2xx4UiAUOcV5Zbhjso1Ak%2FaEC%2BxrpoBYMNlGuYKcedzJR%2F%2F3nk1%2F517pOaJDovkepVMSTD1f%2FS%2F6%2BFmBUE6sIG86xQvlkTbfKYuFz8GKsiqV4jSO128GfU8yBVk4lj0xouSI7vhDYFX3g6eolHjBxkzddxs7Znp%2BSckgbe0YBUQCkSNQ%2BzJQ5oHOuPgSUBmL3Ai%2Bh%2F%2BVr1%2BeX8g%2FLRF3sZ1b%2FEcsMCu35%2Fe6aWIdffyGing59dvihf3IqKZ2zBTEJTg%3D%3D";
+	sendObject.scene = "login_h5";
+	sendObject.loginName = "18639817305";
+	sendObject.udesk = "false";
+	sendObject.source = "1";
+	//找回密码
+	sendObject.userName ="18639817305";
+    var nc_token = ["FFFF00000000017A4D80", (new Date()).getTime(), Math.random()].join(':');
+    var nc=NoCaptcha.init({
+        renderTo: '#nc',
+        appkey: 'FFFF00000000017A4D80', 
+        scene: 'login_h5',
+        token: nc_token,
+        trans: {"key1": "code200"},
+        elementID: ["usernameID"],
+        is_Opt: 0,
+        language: "cn",
+        timeout: 10000,
+        retryTimes: 5,
+        errorTimes: 5,
+        inline:false,
+        apimap: {
+            // 'analyze': '//a.com/nocaptcha/analyze.jsonp',
+            // 'uab_Url': '//aeu.alicdn.com/js/uac/909.js',
+        },
+        bannerHidden:false,
+        initHidden:false,
+        callback: function (data) {
+			sendObject.csessionid = data.csessionid;
+			sendObject.token = nc_token;
+			sendObject.sig = data.sig;
+            window.console && console.log(nc_token)
+            window.console && console.log(data.csessionid)
+            window.console && console.log(data.sig)
+        },
+        error: function (s) {
+        }
+    });
+    NoCaptcha.setEnabled(true);
+    nc.reset();//请务必确保这里调用一次reset()方法
+
+    NoCaptcha.upLang('cn', {
+        'LOADING':"加载中...",//加载
+        'SLIDER_LABEL': "请向右滑动验证",//等待滑动
+        'CHECK_Y':"验证通过",//通过
+        'ERROR_TITLE':"非常抱歉，这出错了...",//拦截
+        'CHECK_N':"验证未通过", //准备唤醒二次验证
+        'OVERLAY_INFORM':"经检测你当前操作环境存在风险，请输入验证码",//二次验证
+        'TIPS_TITLE':"验证码错误，请重新输入"//验证码输错时的提示
+    });
+	
+	
+$(document).ready(function(){
+	//var urlLogin="http://192.168.0.87:8082/api/v2/inner/user/weblogin";
+	var urlfindpw ="http://192.168.0.87:8091/api/v2/inner/user/findPassword/checkUser"
+
+	$("#button").click(function(){
+		$.ajax({
+  type: 'POST',
+  url: urlfindpw,
+  data: sendObject,
+  success: function(){
+	  alert("请求成功");
+  },
+  dataType: "json"
+});
+		
+});
+
+});
+
+    </script>
+	
+<button id="button" type="button" style="width: 150px; height: 200px;"></button>
+</body>
+</html>

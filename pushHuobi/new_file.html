@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<h1>推送</h1>
+	</body>
+	<script src="https://cdn.bootcss.com/pako/1.0.6/pako.min.js"></script>
+	<script type="application/javascript">
+		alert("xxxxxx");
+		let hburl = 'wss://api.huobipro.com/ws';  // 实时币种价格
+		let haurl = 'wss://api.huobi.pro/ws';
+		
+		
+		let requestK = { // 请求对应信息的数据
+		    req: "market.btcusdt.kline.5min",
+		    id: "234dfgsd",
+		   from: 1564057116,
+		    to: 1564147116
+		};
+		
+		let subK = { // 订阅数据
+		    sub: "market.btcusdt.kline.5min",
+		    id: "btcusdt"
+		};
+		
+		let socketK = new WebSocket(hburl);
+		socketK.onopen = function () {
+		    console.log("connection establish");
+		    //socketK.send(JSON.stringify(subK));
+		    socketK.send(JSON.stringify(requestK));
+		};
+		socketK.onmessage = function (event) {
+		    let blob = event.data;
+		    let reader = new FileReader();
+		    reader.onload = function (e) {
+		        let ploydata = new Uint8Array(e.target.result);
+		        let msg = pako.inflate(ploydata, {to: 'string'});
+		        handleData(msg);
+		    };
+		    reader.readAsArrayBuffer(blob, "utf-8");
+		};
+		socketK.onclose = function () {
+		    console.log('connection closed');
+		};
+		
+		// 处理接收到的信息
+		function handleData(msg) {
+		    let data = JSON.parse(msg);
+		    if (data.ping) {
+		        // 如果是 ping 消息
+		        sendHeartMessage(data.ping);
+		    } else if (data.status === 'ok') {
+		        // 响应数据
+		        handleReponseData(data);
+		    } else {
+		        // 数据体
+		        console.log(data)
+		    }
+		}
+		
+		// 发送响应信息
+		function sendHeartMessage(ping) {
+		    socketK.send(JSON.stringify({"pong": ping}));
+		}
+		
+		function handleReponseData(data) {
+			console.log(JSON.stringify(data))
+		}
+                  
+	</script>
+</html>

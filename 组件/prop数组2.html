@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script type="text/javascript" src="vue.js"></script>
+	<body>
+		<div id="blog-post-demo">
+		<blog-post  v-bind:dui="posts"></blog-post>
+	</div>
+</body>
+<script type="application/javascript">
+Vue.component('blog-post', {
+  props: ['dui'],
+  template: '<div><h3>{{ dui.cc }}</h3>  <h1  v-for="ti in dui.shuzu" > {{ti.title}}</h1> </div>'
+})
+new Vue({
+  el: '#blog-post-demo',
+  data: {
+    posts:{cc:"hha",
+	 shuzu:[
+      { id: 1, title: 'My journey with Vuexxxxxxxxx' },
+      { id: 2, title: 'Blogging with Vue' },
+      { id: 3, title: 'Why Vue is so fun' }
+    ]
+	}
+	
+  }
+})
+	
+</script>
+</html>

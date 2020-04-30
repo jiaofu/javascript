@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  		<meta charset="utf-8">
+    <title>reCAPTCHA demo</title>
+  </head>
+  
+  <script type="application/javascript" src="jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LeLrr0UAAAAALSv4GPJl62R08DNBKKYI5KR33lO"></script>
+    <script>
+     
+        grecaptcha.ready(function() {
+            var renderKey = '6LeLrr0UAAAAALSv4GPJl62R08DNBKKYI5KR33lO'
+            grecaptcha.execute(renderKey, {action: '/'}).then(function(token) {
+                $('input[name="token"]').val(token);
+                $('#formid').removeAttr('disabled');
+            });
+        });
+		
+		
+		function aa(){
+			$.ajax({
+			  type: 'POST',
+			  url: "http://zs.coinfex.com:8080/api/test/order",
+			  data: {"token":$('input[name="token"]').val()},
+			  success: function(result){
+				  alert(JSON.stringify(result));
+				  console.log(JSON.stringify(result))
+			  },
+			 contentType:"application/x-www-form-urlencoded",
+			});
+		}
+    </script>
+  <body>
+
+	  
+
+    <form action="http://zs.coinfex.com:8080/api/test/order" method="post">
+        <input type="text" name="name" placeholder="Your name"  >
+        <input type="email" name="email" placeholder="Your email address" >
+		    <input type="text" name="token" placeholder="tolen" >
+
+        <input type="button" id="formid"  name="submit" value="SUBMIT" onclick="aa()" >
+
+    </form>
+  </body>
+  
+
+
+</html>
